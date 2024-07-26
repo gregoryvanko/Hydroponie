@@ -1,0 +1,18 @@
+version: '3.2'
+services:
+  node-red:
+    build:
+      context: ./NodeRed/ConfigurationFiles
+    container_name: node-red
+    user: "0"
+    privileged: true
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=Europe/Brussels
+    ports:
+      -"1880:1880"
+    volumes:
+      -./NodeRed/Data:/data
+    group_add:
+      -dialout
