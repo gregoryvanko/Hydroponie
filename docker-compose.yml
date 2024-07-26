@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 services:
   node-red:
     build:
@@ -11,8 +11,9 @@ services:
     environment:
       - TZ=Europe/Brussels
     ports:
-      -"1880:1880"
+      - "1880:1880"
     volumes:
-      -./NodeRed/Data:/data
+      - ./NodeRed/Data:/data
     group_add:
-      -dialout
+      - dialout
+
