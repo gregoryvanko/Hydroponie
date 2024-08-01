@@ -1,8 +1,5 @@
 FROM nodered/node-red:latest
 
-WORKDIR /data
-RUN npm install --unsafe-perm --no-update-notifier --no-fund --only=production
-
 USER root
 RUN apk add py3-pip
 RUN apk add py3-rpigpio
