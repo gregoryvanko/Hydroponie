@@ -6,6 +6,9 @@ RUN npm install node-red-node-pi-gpio
 RUN npm install node-red-dashboard
 
 USER root
-RUN apk add py3-pip
+RUN apk add py3-pip pigpio
+RUN apk add pigpio
+RUN apk add python-pigpio
+RUN apk add python3-pigpio
 RUN apk add py3-rpigpio
 USER node-red
