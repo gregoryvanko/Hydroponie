@@ -7,5 +7,5 @@ COPY settings.js /data/settings.js
 COPY flows.json /data/flows.json
 USER root
 RUN apk add py3-pip
-RUN apk add py3-RPi.GPIO
+RUN apk add python3-RPi.GPIO
 USER node-red
