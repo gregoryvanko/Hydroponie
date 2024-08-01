@@ -1,0 +1,356 @@
+[
+    {
+        "id": "ec5bd3851ded0af3",
+        "type": "tab",
+        "label": "Temperature",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8be2de6d3dfabc6a",
+        "type": "tab",
+        "label": "Niveau eau",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8f35003b0cc36ee5",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "66e2d93ae7ebac04",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "80145f6438d993ee",
+        "type": "ui_group",
+        "name": "Value",
+        "tab": "8f35003b0cc36ee5",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b669e583f039b061",
+        "type": "ui_group",
+        "name": "Gauge",
+        "tab": "8f35003b0cc36ee5",
+        "order": 2,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": "body { height:800px; }"
+    },
+    {
+        "id": "76af566ce2c8c872",
+        "type": "ui_spacer",
+        "z": "8be2de6d3dfabc6a",
+        "name": "spacer",
+        "group": "80145f6438d993ee",
+        "order": 4,
+        "width": "1",
+        "height": "2"
+    },
+    {
+        "id": "193d2876df55e133",
+        "type": "ds18b20",
+        "z": "ec5bd3851ded0af3",
+        "name": "TempSensor1",
+        "sensorid": "28-7fbb411f64ff",
+        "timer": "1",
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "307d0165113a9d24"
+            ]
+        ]
+    },
+    {
+        "id": "98f86843821646a9",
+        "type": "function",
+        "z": "ec5bd3851ded0af3",
+        "name": "Save TempSensor1",
+        "func": "let Name = \"TempSensor1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4b688510d5c88e78",
+        "type": "ui_text",
+        "z": "ec5bd3851ded0af3",
+        "group": "80145f6438d993ee",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "TempSensor1",
+        "label": "Temperature Cuve",
+        "format": "{{msg.payload}} °c",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 480,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "307d0165113a9d24",
+        "type": "function",
+        "z": "ec5bd3851ded0af3",
+        "name": "Arrondi",
+        "func": "let arrondi = Number.parseFloat(msg.payload).toFixed(1)\nmsg.payload = arrondi.toString()\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 220,
+        "wires": [
+            [
+                "98f86843821646a9",
+                "4b688510d5c88e78"
+            ]
+        ]
+    },
+    {
+        "id": "b692d5f1295c4f11",
+        "type": "rpi-srf",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Ultrason1",
+        "topic": "SRF",
+        "pulse": "10",
+        "pins": "16,18",
+        "precision": "0",
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "6c2cfc142ce9c6b3",
+                "fc15b10661ba1546"
+            ]
+        ]
+    },
+    {
+        "id": "ac1978049d2efa5a",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Save Ultrason1",
+        "func": "let Name = \"Ultrason1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fc15b10661ba1546",
+        "type": "ui_text",
+        "z": "8be2de6d3dfabc6a",
+        "group": "80145f6438d993ee",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Ultrason1",
+        "label": "Niveau eau Cuve",
+        "format": "{{msg.payload}} cm",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 320,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6c2cfc142ce9c6b3",
+        "type": "range",
+        "z": "8be2de6d3dfabc6a",
+        "minin": "7",
+        "maxin": "72",
+        "minout": "100",
+        "maxout": "0",
+        "action": "scale",
+        "round": false,
+        "property": "payload",
+        "name": "Range",
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "993a24dffab0a121"
+            ]
+        ]
+    },
+    {
+        "id": "993a24dffab0a121",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Arrondi",
+        "func": "let arrondi = Number.parseFloat(msg.payload).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "ac1978049d2efa5a",
+                "024109f0c5f6eb73"
+            ]
+        ]
+    },
+    {
+        "id": "024109f0c5f6eb73",
+        "type": "ui_gauge",
+        "z": "8be2de6d3dfabc6a",
+        "name": "",
+        "group": "b669e583f039b061",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Niveau Eau",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#ff2600",
+            "#e6e600",
+            "#00f900"
+        ],
+        "seg1": "10",
+        "seg2": "20",
+        "diff": false,
+        "className": "",
+        "x": 630,
+        "y": 320,
+        "wires": []
+    }
+]

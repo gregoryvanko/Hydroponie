@@ -1,5 +1,5 @@
 /**
- * This is the default settings file provided by Node-RED.
+ * Node-RED Settings created at Sun, 28 Jul 2024 09:49:47 GMT
  *
  * It can contain any valid JavaScript code that will get run when Node-RED
  * is started.
@@ -32,7 +32,7 @@ module.exports = {
  ******************************************************************************/
 
     /** The file containing the flows. If not set, defaults to flows_<hostname>.json **/
-    flowFile: 'flows.json',
+    flowFile: "flows.json",
 
     /** By default, credentials are encrypted in storage using a generated key. To
      * specify your own secret, set the following property.
@@ -41,7 +41,7 @@ module.exports = {
      * node-red from being able to decrypt your existing credentials and they will be
      * lost.
      */
-    //credentialSecret: "a-secret-key",
+    credentialSecret: false,
 
     /** By default, the flow JSON will be formatted over multiple lines making
      * it easier to compare changes when using version control.
@@ -73,13 +73,16 @@ module.exports = {
     /** To password protect the Node-RED editor and admin API, the following
      * property can be used. See https://nodered.org/docs/security.html for details.
      */
+
     adminAuth: {
-        type: "credentials",
-        users: [{
-            username: "gregory",
-            password: "$2b$08$6yKFPlqTHx1kyt.qdB4ZheTT4tEAwqOs4CZQ1ZjKhgGybG/BvCkO6",
-            permissions: "*"
-        }]
+        "type": "credentials",
+        "users": [
+            {
+                "username": "gregory",
+                "password": "$2y$08$iRrJ8jcrsVGEOSXvXlZSG.FB3IQBjOrAeybrQqE7z6DL746BQ1aai",
+                "permissions": "*"
+            }
+        ]
     },
 
     /** The following property can be used to enable HTTPS
@@ -133,11 +136,13 @@ module.exports = {
  *  - httpServerOptions
  *  - httpAdminRoot
  *  - httpAdminMiddleware
+ *  - httpAdminCookieOptions
  *  - httpNodeRoot
  *  - httpNodeCors
  *  - httpNodeMiddleware
  *  - httpStatic
  *  - httpStaticRoot
+ *  - httpStaticCors
  ******************************************************************************/
 
     /** the tcp port that the Node-RED web server is listening on */
@@ -178,6 +183,11 @@ module.exports = {
     //    next();
     // },
 
+    /** The following property can be used to set addition options on the session
+     * cookie used as part of adminAuth authentication system
+     * Available options are documented here: https://www.npmjs.com/package/express-session#cookie
+     */
+    // httpAdminCookieOptions: { },
 
     /** Some nodes, such as HTTP In, can be used to listen for incoming http requests.
      * By default, these are served relative to '/'. The following property
@@ -219,7 +229,7 @@ module.exports = {
     /** When httpAdminRoot is used to move the UI to a different root path, the
      * following property can be used to identify a directory of static content
      * that should be served at http://localhost:1880/.
-     * When httpStaticRoot is set differently to httpAdminRoot, there is no need
+     * When httpStaticRoot is set differently to httpAdminRoot, there is no need 
      * to move httpAdminRoot
      */
     //httpStatic: '/home/nol/node-red-static/', //single static source
@@ -227,14 +237,17 @@ module.exports = {
      *  OR multiple static sources can be created using an array of objects...
      *  Each object can also contain an options object for further configuration.
      *  See https://expressjs.com/en/api.html#express.static for available options.
+     *  They can also contain an option `cors` object to set specific Cross-Origin
+     *  Resource Sharing rules for the source. `httpStaticCors` can be used to
+     *  set a default cors policy across all static routes.
      */
     //httpStatic: [
-    //    {path: '/home/nol/pics/',    root: "/img/"},
-    //    {path: '/home/nol/reports/', root: "/doc/"},
+    //    {path: '/home/nol/pics/',    root: "/img/"}, 
+    //    {path: '/home/nol/reports/', root: "/doc/"}, 
     //    {path: '/home/nol/videos/',  root: "/vid/", options: {maxAge: '1d'}}
     //],
 
-    /**
+    /**  
      * All static routes will be appended to httpStaticRoot
      * e.g. if httpStatic = "/home/nol/docs" and  httpStaticRoot = "/static/"
      *      then "/home/nol/docs" will be served at "/static/"
@@ -243,6 +256,21 @@ module.exports = {
      *      then "/home/nol/pics/" will be served at "/static/img/"
      */
     //httpStaticRoot: '/static/',
+
+    /** The following property can be used to configure cross-origin resource sharing
+     * in the http static routes.
+     * See https://github.com/troygoode/node-cors#configuration-options for
+     * details on its contents. The following is a basic permissive set of options:
+     */
+    //httpStaticCors: {
+    //    origin: "*",
+    //    methods: "GET,PUT,POST,DELETE"
+    //},
+
+    /** The following property can be used to modify proxy options */
+    // proxyOptions: {
+    //     mode: "legacy", // legacy mode is for non-strict previous proxy determination logic (node-red < v4 compatible)
+    // },
 
 /*******************************************************************************
  * Runtime Settings
@@ -255,11 +283,11 @@ module.exports = {
  *  - externalModules
  ******************************************************************************/
 
-    /** Uncomment the following to run node-red in your preferred language.
-     * Available languages include: en-US (default), ja, de, zh-CN, zh-TW, ru, ko
-     * Some languages are more complete than others.
-     */
-    // lang: "de",
+     /** Uncomment the following to run node-red in your preferred language.
+      * Available languages include: en-US (default), ja, de, zh-CN, zh-TW, ru, ko
+      * Some languages are more complete than others.
+      */
+     // lang: "de",
 
     /** Configure diagnostics options
      * - enabled:  When `enabled` is `true` (or unset), diagnostics data will
@@ -286,57 +314,57 @@ module.exports = {
         /** show or hide runtime stop/start options in the node-red editor. Must be set to `false` to hide */
         ui: false,
     },
-    /** Configure the logging output */
-    logging: {
-        /** Only console logging is currently supported */
-        console: {
-            /** Level of logging to be recorded. Options are:
-             * fatal - only those errors which make the application unusable should be recorded
-             * error - record errors which are deemed fatal for a particular request + fatal errors
-             * warn - record problems which are non fatal + errors + fatal errors
-             * info - record information about the general running of the application + warn + error + fatal errors
-             * debug - record information which is more verbose than info + info + warn + error + fatal errors
-             * trace - record very detailed logging + debug + info + warn + error + fatal errors
-             * off - turn off all logging (doesn't affect metrics or audit)
-             */
-            level: "info",
-            /** Whether or not to include metric events in the log output */
-            metrics: false,
-            /** Whether or not to include audit events in the log output */
-            audit: false
-        }
-    },
+     /** Configure the logging output */
+     logging: {
+         /** Only console logging is currently supported */
+         console: {
+             /** Level of logging to be recorded. Options are:
+              * fatal - only those errors which make the application unusable should be recorded
+              * error - record errors which are deemed fatal for a particular request + fatal errors
+              * warn - record problems which are non fatal + errors + fatal errors
+              * info - record information about the general running of the application + warn + error + fatal errors
+              * debug - record information which is more verbose than info + info + warn + error + fatal errors
+              * trace - record very detailed logging + debug + info + warn + error + fatal errors
+              * off - turn off all logging (doesn't affect metrics or audit)
+              */
+             level: "info",
+             /** Whether or not to include metric events in the log output */
+             metrics: false,
+             /** Whether or not to include audit events in the log output */
+             audit: false
+         }
+     },
 
-    /** Context Storage
-     * The following property can be used to enable context storage. The configuration
-     * provided here will enable file-based context that flushes to disk every 30 seconds.
-     * Refer to the documentation for further options: https://nodered.org/docs/api/context/
-     */
-    //contextStorage: {
-    //    default: {
-    //        module:"localfilesystem"
-    //    },
-    //},
+     /** Context Storage
+      * The following property can be used to enable context storage. The configuration
+      * provided here will enable file-based context that flushes to disk every 30 seconds.
+      * Refer to the documentation for further options: https://nodered.org/docs/api/context/
+      */
+     //contextStorage: {
+     //    default: {
+     //        module:"localfilesystem"
+     //    },
+     //},
 
-    /** `global.keys()` returns a list of all properties set in global context.
-     * This allows them to be displayed in the Context Sidebar within the editor.
-     * In some circumstances it is not desirable to expose them to the editor. The
-     * following property can be used to hide any property set in `functionGlobalContext`
-     * from being list by `global.keys()`.
-     * By default, the property is set to false to avoid accidental exposure of
-     * their values. Setting this to true will cause the keys to be listed.
-     */
-    exportGlobalContextKeys: false,
+     /** `global.keys()` returns a list of all properties set in global context.
+      * This allows them to be displayed in the Context Sidebar within the editor.
+      * In some circumstances it is not desirable to expose them to the editor. The
+      * following property can be used to hide any property set in `functionGlobalContext`
+      * from being list by `global.keys()`.
+      * By default, the property is set to false to avoid accidental exposure of
+      * their values. Setting this to true will cause the keys to be listed.
+      */
+     exportGlobalContextKeys: false,
 
-    /** Configure how the runtime will handle external npm modules.
-     * This covers:
-     *  - whether the editor will allow new node modules to be installed
-     *  - whether nodes, such as the Function node are allowed to have their
-     * own dynamically configured dependencies.
-     * The allow/denyList options can be used to limit what modules the runtime
-     * will install/load. It can use '*' as a wildcard that matches anything.
-     */
-    externalModules: {
+     /** Configure how the runtime will handle external npm modules.
+      * This covers:
+      *  - whether the editor will allow new node modules to be installed
+      *  - whether nodes, such as the Function node are allowed to have their
+      * own dynamically configured dependencies.
+      * The allow/denyList options can be used to limit what modules the runtime
+      * will install/load. It can use '*' as a wildcard that matches anything.
+      */
+     externalModules: {
         // autoInstall: false,   /** Whether the runtime will attempt to automatically install missing modules */
         // autoInstallRetry: 30, /** Interval, in seconds, between reinstall attempts */
         // palette: {              /** Configuration for the Palette Manager */
@@ -353,7 +381,7 @@ module.exports = {
         //     allowList: [],
         //     denyList: []
         // }
-    },
+     },
 
 
 /*******************************************************************************
@@ -392,7 +420,6 @@ module.exports = {
              */
             //categories: ['subflows', 'common', 'function', 'network', 'sequence', 'parser', 'storage'],
         },
-
         projects: {
             /** To enable the Projects feature, set this value to true */
             enabled: false,
@@ -419,7 +446,7 @@ module.exports = {
                  * packages/node_modules/@node-red/editor-client/src/vendor/monaco/dist/theme
                  * e.g. "tomorrow-night", "upstream-sunburst", "github", "my-theme"
                  */
-                // theme: "vs",
+                //theme: "vs",
                 /** other overrides can be set e.g. fontSize, fontFamily, fontLigatures etc.
                  * for the full list, see https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html
                  */
@@ -428,7 +455,6 @@ module.exports = {
                 //fontLigatures: true,
             }
         },
-
         markdownEditor: {
             mermaid: {
                 /** enable or disable mermaid diagram in markdown document
@@ -437,6 +463,10 @@ module.exports = {
             }
         },
 
+        multiplayer: {
+            /** To enable the Multiplayer feature, set this value to true */
+            enabled: false
+        },
     },
 
 /*******************************************************************************
@@ -449,6 +479,7 @@ module.exports = {
  *  - ui (for use with Node-RED Dashboard)
  *  - debugUseColors
  *  - debugMaxLength
+ *  - debugStatusLength
  *  - execMaxBufferSize
  *  - httpRequestTimeout
  *  - mqttReconnectTime
@@ -503,6 +534,9 @@ module.exports = {
 
     /** The maximum length, in characters, of any message sent to the debug sidebar tab */
     debugMaxLength: 1000,
+
+    /** The maximum length, in characters, of status messages under the debug node */
+    //debugStatusLength: 32,
 
     /** Maximum buffer size for the exec node. Defaults to 10Mb */
     //execMaxBufferSize: 10000000,
