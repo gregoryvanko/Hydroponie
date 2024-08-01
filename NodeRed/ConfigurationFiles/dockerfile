@@ -1,10 +1,8 @@
 FROM nodered/node-red:latest
 
-WORKDIR /usr/src/node-red
-COPY package.json ./package.json
-RUN npm install --unsafe-perm --no-update-notifier --no-fund --only=production --omit=dev
-COPY settings.js ./settings.js
-COPY flows.json ./flows.json
+RUN npm install node-red-contrib-ds18b20
+RUN npm install node-red-node-pisrf
+RUN npm install node-red-node-pi-gpio
 
 USER root
 RUN apk add py3-pip
