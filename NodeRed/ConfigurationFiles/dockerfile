@@ -2,7 +2,6 @@ FROM nodered/node-red:latest
 
 USER root
 RUN apk add py3-rpigpio
-#RUN apk add py3-dotenv
 
 USER node-red
 
