@@ -33,7 +33,7 @@ USER root
 RUN pip install RPi.GPIO
 
 WORKDIR /usr/src/node-red
-USER node-red
+#USER node-red
 RUN npm install node-red-contrib-ds18b20
 RUN npm install node-red-node-pisrf
 RUN npm install node-red-node-pi-gpio
