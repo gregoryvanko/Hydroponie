@@ -1,15 +1,6 @@
 FROM nodered/node-red:latest
-RUN npm install node-red-contrib-ds18b20
-#RUN npm install node-red-node-pisrf
-#RUN npm install node-red-node-pi-gpio
-RUN npm install node-red-dashboard
+
 USER root
-#RUN apk add --update --no-cache python3 py3-pip && ln -sf python3 /usr/bin/python
 RUN apk add py3-rpigpio
+
 USER node-red
-
-
-#FROM nodered/node-red-docker:rpi
-#FROM raspberryvalley/nodered:rpi
-#USER root
-#RUN apt install python3-RPi.GPIO
