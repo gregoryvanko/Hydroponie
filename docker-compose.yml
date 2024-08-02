@@ -15,6 +15,7 @@ services:
       - /dev/gpiomem
     volumes:
       - ./NodeRed/Data:/data
+      - /dev:/dev
     group_add:
       - dialout
 
