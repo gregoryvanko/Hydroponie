@@ -1,5 +1,9 @@
 import time
 import RPi.GPIO as GPIO
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def measure():
   speed_of_sound = 34300 
@@ -28,8 +32,8 @@ def measure_average():
   return distance
 
 GPIO.setmode(GPIO.BOARD)
-TRIG_PIN = 16
-ECHO_PIN = 18
+TRIG_PIN = os.getenv('TRIG_PIN')
+ECHO_PIN = os.getenv('ECHO_PIN')
 GPIO.setup(TRIG_PIN, GPIO.OUT)
 GPIO.setup(ECHO_PIN, GPIO.IN)
 GPIO.output(TRIG_PIN, False)
