@@ -32,7 +32,7 @@ USER root
 # Install python rpi - TODO find way to install documentation
 RUN pip install RPi.GPIO
 
-WORKDIR /usr/src/node-red
+WORKDIR /root/.node-red
 #USER node-red
 RUN npm install node-red-contrib-ds18b20
 RUN npm install node-red-node-pisrf
