@@ -22,12 +22,11 @@ RUN apt-get install -y \
     python-dev \
     python-pip \
     python-virtualenv \
-    python3-RPi.GPIO \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
 # Install python rpi - TODO find way to install documentation
-#RUN pip install RPi.GPIO
+RUN pip install RPi.GPIO
 
 WORKDIR /usr/src/node-red
 USER node-red
