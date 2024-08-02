@@ -16,7 +16,7 @@ USER root
 #RUN apt update
 #RUN apt upgrade
 
-#RUN apt install python3-RPi.GPIO
+RUN apt install python3-RPi.GPIO
 
 # Install python and dependencies
 #RUN apt-get install -y \
@@ -30,7 +30,7 @@ USER root
 #    rm -rf /var/lib/apt/lists/*
 
 # Install python rpi - TODO find way to install documentation
-RUN pip install RPi.GPIO
+#RUN pip install RPi.GPIO
 
 WORKDIR /root/.node-red
 #USER node-red
