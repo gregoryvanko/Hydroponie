@@ -14,14 +14,14 @@ USER root
 
 # Install python and dependencies
 RUN apt-get install -y \
-    build-essential \
-    python \
-    python-dev \
-    python-pip \
-    python-virtualenv \
+#    build-essential \
+#    python \
+#    python-dev \
+#    python-pip \
+#    python-virtualenv \
     python3-RPi.GPIO \
-    --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
+#    --no-install-recommends && \
+#    rm -rf /var/lib/apt/lists/*
 
 # Install python rpi - TODO find way to install documentation
 #RUN pip install RPi.GPIO
