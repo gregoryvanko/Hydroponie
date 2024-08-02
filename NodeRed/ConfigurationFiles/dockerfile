@@ -4,5 +4,7 @@ USER root
 RUN apk add py3-rpigpio
 
 USER node-red
+
+# Add package to install
 RUN npm install node-red-contrib-ds18b20
 RUN npm install node-red-dashboard
