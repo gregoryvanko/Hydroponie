@@ -9,7 +9,8 @@
 #USER node-red
 
 
-FROM nodered/node-red-docker:rpi
+#FROM nodered/node-red-docker:rpi
+FROM raspberryvalley/nodered:rpi
 USER root
 
 #RUN apt update
