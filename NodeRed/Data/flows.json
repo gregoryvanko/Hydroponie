@@ -4,16 +4,14 @@
         "type": "tab",
         "label": "Temperature",
         "disabled": false,
-        "info": "",
-        "env": []
+        "info": ""
     },
     {
         "id": "8be2de6d3dfabc6a",
         "type": "tab",
         "label": "Niveau eau",
         "disabled": false,
-        "info": "",
-        "env": []
+        "info": ""
     },
     {
         "id": "8f35003b0cc36ee5",
@@ -97,8 +95,7 @@
                 "primary": "indigo",
                 "accents": "blue",
                 "warn": "red",
-                "background": "grey",
-                "palette": "light"
+                "background": "grey"
             }
         },
         "site": {
@@ -128,8 +125,7 @@
         "order": 1,
         "disp": false,
         "width": "6",
-        "collapse": false,
-        "className": ""
+        "collapse": false
     },
     {
         "id": "b669e583f039b061",
@@ -139,8 +135,7 @@
         "order": 2,
         "disp": false,
         "width": "6",
-        "collapse": false,
-        "className": "body { height:800px; }"
+        "collapse": false
     },
     {
         "id": "76af566ce2c8c872",
@@ -153,32 +148,13 @@
         "height": "2"
     },
     {
-        "id": "193d2876df55e133",
-        "type": "ds18b20",
-        "z": "ec5bd3851ded0af3",
-        "name": "TempSensor1",
-        "sensorid": "28-7fbb411f64ff",
-        "timer": "1",
-        "x": 130,
-        "y": 220,
-        "wires": [
-            [
-                "307d0165113a9d24"
-            ]
-        ]
-    },
-    {
         "id": "98f86843821646a9",
         "type": "function",
         "z": "ec5bd3851ded0af3",
         "name": "Save TempSensor1",
         "func": "let Name = \"TempSensor1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
-        "timeout": 0,
         "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
         "x": 490,
         "y": 220,
         "wires": [
@@ -197,13 +173,8 @@
         "label": "Temperature Cuve",
         "format": "{{msg.payload}} °c",
         "layout": "col-center",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 480,
-        "y": 280,
+        "x": 502,
+        "y": 282,
         "wires": []
     },
     {
@@ -213,11 +184,7 @@
         "name": "Arrondi",
         "func": "let arrondi = Number.parseFloat(msg.payload).toFixed(1)\nmsg.payload = arrondi.toString()\nreturn msg",
         "outputs": 1,
-        "timeout": 0,
         "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
         "x": 300,
         "y": 220,
         "wires": [
@@ -228,20 +195,17 @@
         ]
     },
     {
-        "id": "b692d5f1295c4f11",
-        "type": "rpi-srf",
-        "z": "8be2de6d3dfabc6a",
-        "name": "Ultrason1",
-        "topic": "SRF",
-        "pulse": "10",
-        "pins": "16,18",
-        "precision": "0",
-        "x": 140,
-        "y": 200,
+        "id": "193d2876df55e133",
+        "type": "ds18b20",
+        "z": "ec5bd3851ded0af3",
+        "name": "TempSensor1",
+        "sensorid": "28-7fbb411f64ff",
+        "timer": "0.5",
+        "x": 130,
+        "y": 220,
         "wires": [
             [
-                "6c2cfc142ce9c6b3",
-                "fc15b10661ba1546"
+                "307d0165113a9d24"
             ]
         ]
     },
@@ -252,13 +216,9 @@
         "name": "Save Ultrason1",
         "func": "let Name = \"Ultrason1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
-        "timeout": 0,
         "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 640,
-        "y": 200,
+        "x": 808,
+        "y": 224,
         "wires": [
             []
         ]
@@ -275,13 +235,8 @@
         "label": "Niveau eau Cuve",
         "format": "{{msg.payload}} cm",
         "layout": "col-center",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 320,
-        "y": 280,
+        "x": 483,
+        "y": 153,
         "wires": []
     },
     {
@@ -296,32 +251,11 @@
         "round": false,
         "property": "payload",
         "name": "Range",
-        "x": 310,
-        "y": 200,
+        "x": 478,
+        "y": 224,
         "wires": [
             [
                 "993a24dffab0a121"
-            ]
-        ]
-    },
-    {
-        "id": "993a24dffab0a121",
-        "type": "function",
-        "z": "8be2de6d3dfabc6a",
-        "name": "Arrondi",
-        "func": "let arrondi = Number.parseFloat(msg.payload).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 460,
-        "y": 200,
-        "wires": [
-            [
-                "ac1978049d2efa5a",
-                "024109f0c5f6eb73"
             ]
         ]
     },
@@ -347,10 +281,130 @@
         ],
         "seg1": "10",
         "seg2": "20",
-        "diff": false,
-        "className": "",
-        "x": 630,
-        "y": 320,
+        "x": 804,
+        "y": 154,
         "wires": []
+    },
+    {
+        "id": "1a5523e045e9f691",
+        "type": "exec",
+        "z": "8be2de6d3dfabc6a",
+        "command": "python3 /data/Ultrason.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Ultrason.py",
+        "x": 274,
+        "y": 237,
+        "wires": [
+            [
+                "5ab05137dc585294",
+                "6c2cfc142ce9c6b3",
+                "fc15b10661ba1546"
+            ],
+            [
+                "ad7e14091ae52074"
+            ],
+            [
+                "b0533519d75fff2b"
+            ]
+        ]
+    },
+    {
+        "id": "7a5136c2d37bb302",
+        "type": "inject",
+        "z": "8be2de6d3dfabc6a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 108,
+        "y": 237,
+        "wires": [
+            [
+                "1a5523e045e9f691"
+            ]
+        ]
+    },
+    {
+        "id": "5ab05137dc585294",
+        "type": "debug",
+        "z": "8be2de6d3dfabc6a",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 467,
+        "y": 84,
+        "wires": []
+    },
+    {
+        "id": "ad7e14091ae52074",
+        "type": "debug",
+        "z": "8be2de6d3dfabc6a",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 475,
+        "y": 285,
+        "wires": []
+    },
+    {
+        "id": "b0533519d75fff2b",
+        "type": "debug",
+        "z": "8be2de6d3dfabc6a",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 481,
+        "y": 363,
+        "wires": []
+    },
+    {
+        "id": "993a24dffab0a121",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Arrondi",
+        "func": "let arrondi = Number.parseFloat(msg.payload).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 628,
+        "y": 224,
+        "wires": [
+            [
+                "ac1978049d2efa5a",
+                "024109f0c5f6eb73"
+            ]
+        ]
     }
 ]
