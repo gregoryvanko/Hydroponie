@@ -12,6 +12,8 @@
 FROM nodered/node-red-docker:rpi
 USER root
 
+RUN apt install python3-RPi.GPIO
+
 # Install python and dependencies
 RUN apt-get install -y \
 #    build-essential \
@@ -19,7 +21,7 @@ RUN apt-get install -y \
 #    python-dev \
 #    python-pip \
 #    python-virtualenv \
-    python3-RPi.GPIO \
+#    python3-RPi.GPIO \
 #    --no-install-recommends && \
 #    rm -rf /var/lib/apt/lists/*
 
