@@ -32,7 +32,7 @@ def measure_average():
   return distance
 
 GPIO.setmode(GPIO.BOARD)
-print(os.environ["RIG_PIN"])
+print(os.environ["TRIG_PIN"])
 
 TRIG_PIN = os.getenv('TRIG_PIN')
 ECHO_PIN = os.getenv('ECHO_PIN')
