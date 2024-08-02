@@ -3,7 +3,7 @@ services:
     build:
       context: ./NodeRed/ConfigurationFiles
     container_name: node-red
-    user: ${UID}
+    user: "0"
     privileged: true
     restart: unless-stopped
     network_mode: host
