@@ -1,12 +1,8 @@
 FROM nodered/node-red:latest
 
-WORKDIR /usr/src/node-red
-COPY package.json /usr/src/node-red
-RUN npm install --unsafe-perm --omit=dev
-WORKDIR /usr/src/node-red
-
-
 USER root
 RUN apk add py3-rpigpio
 
 USER node-red
+RUN npm install node-red-contrib-ds18b20
+RUN npm install node-red-dashboard
