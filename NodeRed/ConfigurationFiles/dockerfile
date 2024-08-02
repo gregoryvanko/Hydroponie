@@ -12,7 +12,8 @@
 FROM nodered/node-red-docker:rpi
 USER root
 
-RUN apt-get update
+RUN apt update
+RUN apt upgrade
 
 RUN apt install python3-RPi.GPIO
 
