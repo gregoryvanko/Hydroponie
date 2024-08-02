@@ -2,7 +2,7 @@ FROM nodered/node-red:latest
 
 WORKDIR /data
 COPY package.json /data
-RUN npm install --unsafe-perm --no-update-notifier --no-fund --only=production --omit=dev
+RUN npm install --unsafe-perm --omit=dev
 WORKDIR /usr/src/node-red
 
 
