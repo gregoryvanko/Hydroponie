@@ -12,9 +12,6 @@
 FROM nodered/node-red-docker:rpi
 USER root
 
-#update cache
-RUN apt-get update
-
 # Install python and dependencies
 RUN apt-get install -y \
     build-essential \
