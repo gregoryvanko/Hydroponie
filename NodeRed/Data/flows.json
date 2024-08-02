@@ -155,7 +155,7 @@
         "func": "let Name = \"TempSensor1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
         "noerr": 0,
-        "x": 490,
+        "x": 790,
         "y": 220,
         "wires": [
             []
@@ -189,8 +189,8 @@
         "y": 220,
         "wires": [
             [
-                "98f86843821646a9",
-                "4b688510d5c88e78"
+                "4b688510d5c88e78",
+                "216539a959245c36"
             ]
         ]
     },
@@ -200,12 +200,37 @@
         "z": "ec5bd3851ded0af3",
         "name": "TempSensor1",
         "sensorid": "28-7fbb411f64ff",
-        "timer": "0.5",
+        "timer": "0.2",
         "x": 130,
         "y": 220,
         "wires": [
             [
                 "307d0165113a9d24"
+            ]
+        ]
+    },
+    {
+        "id": "216539a959245c36",
+        "type": "delay",
+        "z": "ec5bd3851ded0af3",
+        "name": "Garde 1 msg par 10min",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 530,
+        "y": 220,
+        "wires": [
+            [
+                "98f86843821646a9"
             ]
         ]
     },
@@ -217,8 +242,8 @@
         "func": "let Name = \"Ultrason1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
         "noerr": 0,
-        "x": 808,
-        "y": 224,
+        "x": 1100,
+        "y": 220,
         "wires": [
             []
         ]
@@ -235,6 +260,11 @@
         "label": "Niveau eau Cuve",
         "format": "{{msg.payload}} cm",
         "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
         "x": 483,
         "y": 153,
         "wires": []
@@ -317,7 +347,7 @@
         "id": "7a5136c2d37bb302",
         "type": "inject",
         "z": "8be2de6d3dfabc6a",
-        "name": "",
+        "name": "Autostart",
         "props": [
             {
                 "p": "payload"
@@ -327,14 +357,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "10",
+        "repeat": "12",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 108,
+        "x": 98,
         "y": 237,
         "wires": [
             [
@@ -402,8 +432,33 @@
         "y": 224,
         "wires": [
             [
-                "ac1978049d2efa5a",
-                "024109f0c5f6eb73"
+                "024109f0c5f6eb73",
+                "5eff6ddb5fb994ed"
+            ]
+        ]
+    },
+    {
+        "id": "5eff6ddb5fb994ed",
+        "type": "delay",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Garde 1 msg par 10min",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 220,
+        "wires": [
+            [
+                "ac1978049d2efa5a"
             ]
         ]
     }
