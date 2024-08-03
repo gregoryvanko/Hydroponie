@@ -19,4 +19,12 @@ services:
       - ./NodeRed/Data:/data
     group_add:
       - dialout
-
+  
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
+    network_mode: host
