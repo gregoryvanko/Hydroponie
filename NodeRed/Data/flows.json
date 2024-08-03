@@ -16,8 +16,9 @@
     {
         "id": "8f35003b0cc36ee5",
         "type": "ui_tab",
-        "name": "Home",
+        "name": "Value",
         "icon": "dashboard",
+        "order": 2,
         "disabled": false,
         "hidden": false
     },
@@ -122,7 +123,7 @@
         "type": "ui_group",
         "name": "Value",
         "tab": "8f35003b0cc36ee5",
-        "order": 1,
+        "order": 2,
         "disp": false,
         "width": "6",
         "collapse": false
@@ -132,20 +133,30 @@
         "type": "ui_group",
         "name": "Gauge",
         "tab": "8f35003b0cc36ee5",
-        "order": 2,
+        "order": 3,
         "disp": false,
         "width": "6",
         "collapse": false
     },
     {
-        "id": "76af566ce2c8c872",
-        "type": "ui_spacer",
-        "z": "8be2de6d3dfabc6a",
-        "name": "spacer",
-        "group": "80145f6438d993ee",
-        "order": 4,
-        "width": "1",
-        "height": "2"
+        "id": "cfb206593b61e545",
+        "type": "ui_group",
+        "name": "Graph",
+        "tab": "6bce420ab49c6829",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6bce420ab49c6829",
+        "type": "ui_tab",
+        "name": "Graph",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
     },
     {
         "id": "98f86843821646a9",
@@ -230,8 +241,53 @@
         "y": 220,
         "wires": [
             [
-                "98f86843821646a9"
+                "98f86843821646a9",
+                "d48beca72ea0e989"
             ]
+        ]
+    },
+    {
+        "id": "d48beca72ea0e989",
+        "type": "ui_chart",
+        "z": "ec5bd3851ded0af3",
+        "name": "Temperature",
+        "group": "cfb206593b61e545",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "2",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 770,
+        "y": 280,
+        "wires": [
+            []
         ]
     },
     {
@@ -253,7 +309,7 @@
         "type": "ui_text",
         "z": "8be2de6d3dfabc6a",
         "group": "80145f6438d993ee",
-        "order": 3,
+        "order": 2,
         "width": 0,
         "height": 0,
         "name": "Ultrason1",
@@ -458,8 +514,53 @@
         "y": 220,
         "wires": [
             [
-                "ac1978049d2efa5a"
+                "ac1978049d2efa5a",
+                "8dfaeb1745400549"
             ]
+        ]
+    },
+    {
+        "id": "8dfaeb1745400549",
+        "type": "ui_chart",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Niveau eau",
+        "group": "cfb206593b61e545",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Niveau Eau",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "2",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1090,
+        "y": 300,
+        "wires": [
+            []
         ]
     }
 ]
