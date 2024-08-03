@@ -37,6 +37,9 @@ Créer et exécuter le container
 docker compose up -d
 ```
 
+## GPIO du Raspberry Pi
+![GPIO](./Images/RPI.png)
+
 ## Mesure de la temperature
 Pour mesurer la temperature, on utilise une sonde ds18b20.
  
