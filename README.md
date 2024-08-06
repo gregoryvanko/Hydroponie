@@ -69,6 +69,12 @@ PIN_TRIG=16
 PIN_ECHO=18
 ```
 
+Les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier .env a sauver sur le Raspberry PI :
+```
+SONAR_MAX=72
+SONAR_MIN=7
+```
+
 ## CloudFlared
 Pour se connecter au Raspberry Pi depuis internet on va créer un tunnel via CloudFlare.
 
@@ -81,6 +87,8 @@ CLOUDFLARED_TOKEN=djyugricbd...
 ```
 PIN_TRIG=16
 PIN_ECHO=18
+SONAR_MAX=72
+SONAR_MIN=7
 CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
