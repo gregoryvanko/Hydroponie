@@ -334,14 +334,15 @@
         "minout": "100",
         "maxout": "0",
         "action": "scale",
-        "round": false,
+        "round": true,
         "property": "payload",
         "name": "Range",
         "x": 478,
         "y": 224,
         "wires": [
             [
-                "993a24dffab0a121"
+                "024109f0c5f6eb73",
+                "5eff6ddb5fb994ed"
             ]
         ]
     },
@@ -367,8 +368,8 @@
         ],
         "seg1": "10",
         "seg2": "20",
-        "x": 804,
-        "y": 154,
+        "x": 770,
+        "y": 160,
         "wires": []
     },
     {
@@ -477,23 +478,6 @@
         "wires": []
     },
     {
-        "id": "993a24dffab0a121",
-        "type": "function",
-        "z": "8be2de6d3dfabc6a",
-        "name": "Arrondi",
-        "func": "let arrondi = Number.parseFloat(msg.payload).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 628,
-        "y": 224,
-        "wires": [
-            [
-                "024109f0c5f6eb73",
-                "5eff6ddb5fb994ed"
-            ]
-        ]
-    },
-    {
         "id": "5eff6ddb5fb994ed",
         "type": "delay",
         "z": "8be2de6d3dfabc6a",
@@ -510,7 +494,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 870,
+        "x": 810,
         "y": 220,
         "wires": [
             [
