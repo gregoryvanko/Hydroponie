@@ -83,7 +83,7 @@ Il faut configurer un tunnel dans Claudflare et sauver le token communiqué par 
 CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
-## Le fichier .env du a créer sur le Raspberry Pi:
+## Le fichier .env a créer sur le Raspberry Pi:
 ```
 PIN_TRIG=16
 PIN_ECHO=18
