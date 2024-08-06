@@ -166,7 +166,7 @@
         "func": "let Name = \"TempSensor1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
         "noerr": 0,
-        "x": 790,
+        "x": 770,
         "y": 220,
         "wires": [
             []
@@ -184,8 +184,8 @@
         "label": "Temperature Cuve",
         "format": "{{msg.payload}} °c",
         "layout": "col-center",
-        "x": 502,
-        "y": 282,
+        "x": 480,
+        "y": 160,
         "wires": []
     },
     {
@@ -237,11 +237,10 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 530,
+        "x": 510,
         "y": 220,
         "wires": [
             [
-                "98f86843821646a9",
                 "d48beca72ea0e989"
             ]
         ]
@@ -284,8 +283,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 770,
-        "y": 280,
+        "x": 750,
+        "y": 160,
         "wires": [
             []
         ]
@@ -298,7 +297,7 @@
         "func": "let Name = \"Ultrason1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
         "noerr": 0,
-        "x": 1100,
+        "x": 1200,
         "y": 220,
         "wires": [
             []
@@ -329,20 +328,20 @@
         "id": "6c2cfc142ce9c6b3",
         "type": "range",
         "z": "8be2de6d3dfabc6a",
-        "minin": "7",
-        "maxin": "72",
+        "minin": "${SONAR_MIN}",
+        "maxin": "${SONAR_MAX}",
         "minout": "100",
         "maxout": "0",
         "action": "scale",
         "round": true,
         "property": "payload",
         "name": "Range",
-        "x": 478,
-        "y": 224,
+        "x": 750,
+        "y": 220,
         "wires": [
             [
-                "024109f0c5f6eb73",
-                "5eff6ddb5fb994ed"
+                "5eff6ddb5fb994ed",
+                "024109f0c5f6eb73"
             ]
         ]
     },
@@ -368,7 +367,7 @@
         ],
         "seg1": "10",
         "seg2": "20",
-        "x": 770,
+        "x": 910,
         "y": 160,
         "wires": []
     },
@@ -389,8 +388,8 @@
         "wires": [
             [
                 "5ab05137dc585294",
-                "6c2cfc142ce9c6b3",
-                "fc15b10661ba1546"
+                "fc15b10661ba1546",
+                "70fa6172b52f5a0a"
             ],
             [
                 "ad7e14091ae52074"
@@ -494,11 +493,10 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 810,
+        "x": 950,
         "y": 220,
         "wires": [
             [
-                "ac1978049d2efa5a",
                 "8dfaeb1745400549"
             ]
         ]
@@ -541,10 +539,30 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1090,
-        "y": 300,
+        "x": 1190,
+        "y": 160,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "70fa6172b52f5a0a",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "name": "bloque si au dessu de max value",
+        "func": "let SONAR_MAX = parseInt(env.get(\"SONAR_MAX\"));\nlet MaxValue = SONAR_MAX + (SONAR_MAX*0.1)\n\nif (msg.payload < MaxValue){\n    return msg;\n} else {\n    node.warn(\"la valeur mesurée depasse la limite max\");\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 220,
+        "wires": [
+            [
+                "6c2cfc142ce9c6b3"
+            ]
         ]
     }
 ]
