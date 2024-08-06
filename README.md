@@ -63,24 +63,26 @@ La librairie python suivante est nécessaire pour faire fonctionner le script (e
 sudo apt install python3-RPi.GPIO
 ```
 
-Les deux GPIO du module ultrason se configurent via des variables d'environnement dans le fichier docker-compose.yml :
+Les deux GPIO du module ultrason se configurent dans le fichier .env a sauver sur le Raspberry Pi :
 ```
-environment:
-      - TRIG_PIN=16
-      - ECHO_PIN=18
+PIN_TRIG=16
+PIN_ECHO=18
 ```
 
 ## CloudFlared
 Pour se connecter au Raspberry Pi depuis internet on va créer un tunnel via CloudFlare.
 
-Il faut configurer un tunnel dans Claudflare et créer un fichier .env sur le Raspberry Pi avec le token communiqué par CloudFlare. Voici le contenu du fichier .env :
+Il faut configurer un tunnel dans Claudflare et sauver le token communiqué par ClaudFlare dans le fichier .env à sauver sur le Raspberry PI.
 ```
-CLOUDFLARED_TOKEN=
+CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
-## Variables env du fichier docker-compose.yml pour le service node-red :
- - TRIG_PIN : pin TRIG du capteur ultrason (ex: 16)
- - ECHO_PIN = pin ECHO du capteur ultrason (ex: 18)
+## Le fichier .env du a créer sur le Raspberry Pi :
+```
+PIN_TRIG=16
+PIN_ECHO=18
+CLOUDFLARED_TOKEN=djyugricbd...
+```
 
 # Update
 Ajouter les nouveau package NodeRed à installer dans le fichier NodeRed/Configuration/dockerfile en y copiant la ligne suivante : 
