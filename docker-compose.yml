@@ -11,6 +11,8 @@ services:
       - TZ=Europe/Brussels
       - PIN_TRIG=${PIN_TRIG:-16}
       - PIN_ECHO=${PIN_ECHO:-18}
+      - SONAR_MAX=${SONAR_MAX:-72}
+      - SONAR_MIN=${SONAR_MIN:-7}
     ports:
       - "1880:1880"
     devices:
