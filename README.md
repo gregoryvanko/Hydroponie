@@ -48,7 +48,7 @@ Il faut activer l'interface 1-Wire sur le raspberrypi via la commande:
 sudo raspi-config
 ```
 
-La mesure se fait via un package NodeRed (il est installé automatiquement lors de la création du container docker) :
+La mesure se fait via un package NodeRed (il est installé automatiquement lors de la création du container docker):
 ```
 node-red-contrib-ds18b20
 ```
@@ -58,18 +58,18 @@ Pour utiliser le module ultrason, on utilise une sonde SRF04.
  
 Un script python permet de réaliser une mesure de distance via la sonde. Ce script est exécuté via NodeRed.
 
-La librairie python suivante est nécessaire pour faire fonctionner le script (elle est installée automatiquement lors de la création du container docker) :
+La librairie python suivante est nécessaire pour faire fonctionner le script (elle est installée automatiquement lors de la création du container docker):
 ```
 sudo apt install python3-RPi.GPIO
 ```
 
-Les deux GPIO du module ultrason se configurent dans le fichier .env a sauver sur le Raspberry Pi :
+Les deux GPIO du module ultrason se configurent dans le fichier .env a sauver sur le Raspberry Pi:
 ```
 PIN_TRIG=16
 PIN_ECHO=18
 ```
 
-Les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier .env a sauver sur le Raspberry PI :
+Les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier .env a sauver sur le Raspberry PI:
 ```
 SONAR_MAX=72
 SONAR_MIN=7
@@ -83,7 +83,7 @@ Il faut configurer un tunnel dans Claudflare et sauver le token communiqué par 
 CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
-## Le fichier .env du a créer sur le Raspberry Pi :
+## Le fichier .env du a créer sur le Raspberry Pi:
 ```
 PIN_TRIG=16
 PIN_ECHO=18
@@ -93,7 +93,7 @@ CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
 # Update
-Ajouter les nouveau package NodeRed à installer dans le fichier NodeRed/Configuration/dockerfile en y copiant la ligne suivante : 
+Ajouter les nouveau package NodeRed à installer dans le fichier NodeRed/Configuration/dockerfile en y copiant la ligne suivante: 
 ```
 RUN npm install xxx
 ```
