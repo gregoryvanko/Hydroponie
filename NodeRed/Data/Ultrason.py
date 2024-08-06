@@ -30,8 +30,8 @@ def measure_average():
 
 GPIO.setmode(GPIO.BOARD)
 
-TRIG_PIN = int(os.environ["TRIG_PIN"])
-ECHO_PIN = int(os.environ["ECHO_PIN"])
+TRIG_PIN = int(os.environ["PIN_TRIG"])
+ECHO_PIN = int(os.environ["PIN_ECHO"])
 
 GPIO.setup(TRIG_PIN, GPIO.OUT)
 GPIO.setup(ECHO_PIN, GPIO.IN)
