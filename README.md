@@ -93,7 +93,7 @@ CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
 # Update
-Ajouter les nouveau package NodeRed à installer dans le fichier NodeRed/Configuration/dockerfile en y copiant la ligne suivante: 
+Ajouter le package NodeRed à installer dans le fichier NodeRed/Configuration/dockerfile en y copiant la ligne suivante: 
 ```
 RUN npm install xxx
 ```
