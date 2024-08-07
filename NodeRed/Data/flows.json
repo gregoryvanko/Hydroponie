@@ -14,6 +14,14 @@
         "info": ""
     },
     {
+        "id": "829f0f27baac9fee",
+        "type": "tab",
+        "label": "Set Input",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "8f35003b0cc36ee5",
         "type": "ui_tab",
         "name": "Value",
@@ -123,7 +131,7 @@
         "type": "ui_group",
         "name": "Value",
         "tab": "8f35003b0cc36ee5",
-        "order": 2,
+        "order": 1,
         "disp": false,
         "width": "6",
         "collapse": false
@@ -132,7 +140,7 @@
         "id": "b669e583f039b061",
         "type": "ui_group",
         "name": "Gauge",
-        "tab": "8f35003b0cc36ee5",
+        "tab": "6bce420ab49c6829",
         "order": 3,
         "disp": false,
         "width": "6",
@@ -141,7 +149,7 @@
     {
         "id": "cfb206593b61e545",
         "type": "ui_group",
-        "name": "Graph",
+        "name": "Temperature",
         "tab": "6bce420ab49c6829",
         "order": 1,
         "disp": false,
@@ -157,6 +165,28 @@
         "order": 1,
         "disabled": false,
         "hidden": false
+    },
+    {
+        "id": "211febbd4a9f7ab4",
+        "type": "ui_group",
+        "name": "Niveau Eau",
+        "tab": "6bce420ab49c6829",
+        "order": 2,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "acfb3ac3c77092b6",
+        "type": "ui_group",
+        "name": "Input",
+        "tab": "8f35003b0cc36ee5",
+        "order": 2,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "98f86843821646a9",
@@ -337,11 +367,10 @@
         "property": "payload",
         "name": "Range",
         "x": 750,
-        "y": 220,
+        "y": 300,
         "wires": [
             [
-                "5eff6ddb5fb994ed",
-                "024109f0c5f6eb73"
+                "7e5a8e6c841505a9"
             ]
         ]
     },
@@ -506,7 +535,7 @@
         "type": "ui_chart",
         "z": "8be2de6d3dfabc6a",
         "name": "Niveau eau",
-        "group": "cfb206593b61e545",
+        "group": "211febbd4a9f7ab4",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -550,7 +579,7 @@
         "type": "function",
         "z": "8be2de6d3dfabc6a",
         "name": "bloque si au dessu de max value",
-        "func": "let SONAR_MAX = parseInt(env.get(\"SONAR_MAX\"));\nlet MaxValue = SONAR_MAX + (SONAR_MAX*0.1)\n\nif (msg.payload < MaxValue){\n    return msg;\n} else {\n    node.warn(\"la valeur mesurée depasse la limite max\");\n}",
+        "func": "let SONAR_MAX = parseInt(global.get(\"SONAR_MAX\")) || parseFloat(env.get(\"SONAR_MAX\"))\nlet MaxValue = SONAR_MAX + (SONAR_MAX*0.1)\n\nif (msg.payload < MaxValue){\n    return msg;\n} else {\n    node.warn(\"la valeur mesurée depasse la limite max\");\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -561,8 +590,277 @@
         "y": 220,
         "wires": [
             [
-                "6c2cfc142ce9c6b3"
+                "b386e894fddf3583"
             ]
+        ]
+    },
+    {
+        "id": "b386e894fddf3583",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Range",
+        "func": "let data = Number.parseFloat(msg.payload)\n\nlet inMin = global.get(\"SONAR_MIN\") || parseFloat(env.get(\"SONAR_MIN\"))\nlet inMax = global.get(\"SONAR_MAX\") || parseFloat(env.get(\"SONAR_MAX\"))\n\nlet outMin = 100\nlet outMax = 0\n\nlet range = (data - inMin) * (outMax - outMin) / (inMax - inMin) + outMin\nrange = range.toFixed(0)\nmsg.payload = range\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "5eff6ddb5fb994ed",
+                "024109f0c5f6eb73"
+            ]
+        ]
+    },
+    {
+        "id": "7e5a8e6c841505a9",
+        "type": "debug",
+        "z": "8be2de6d3dfabc6a",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "9d06d2dccec353ea",
+        "type": "ui_form",
+        "z": "829f0f27baac9fee",
+        "name": "Input",
+        "label": "Input",
+        "group": "acfb3ac3c77092b6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Min",
+                "value": "Min",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Max",
+                "value": "Max",
+                "type": "number",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Min": "",
+            "Max": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": false,
+        "className": "",
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "795330a9fc23aa21"
+            ]
+        ]
+    },
+    {
+        "id": "bcd5b67d70ab3d4a",
+        "type": "function",
+        "z": "829f0f27baac9fee",
+        "name": "Set defaut",
+        "func": "let inMin = global.get(\"SONAR_MIN\") || parseFloat(env.get(\"SONAR_MIN\"))\nlet inMax = global.get(\"SONAR_MAX\") || parseFloat(env.get(\"SONAR_MAX\"))\n\nlet data = {\"Min\" : inMin, \"Max\" : inMax}\nmsg.payload = data\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 240,
+        "wires": [
+            [
+                "9d06d2dccec353ea"
+            ]
+        ]
+    },
+    {
+        "id": "de7fc0e2fa34aeaa",
+        "type": "ui_button",
+        "z": "829f0f27baac9fee",
+        "name": "Get input value",
+        "group": "acfb3ac3c77092b6",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "Get input value",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "lightblue",
+        "className": "",
+        "icon": "",
+        "payload": "set",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 240,
+        "wires": [
+            [
+                "bcd5b67d70ab3d4a"
+            ]
+        ]
+    },
+    {
+        "id": "795330a9fc23aa21",
+        "type": "function",
+        "z": "829f0f27baac9fee",
+        "name": "Set defaut value",
+        "func": "let Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(msg.payload.Min))\nglobal.set(Max, parseFloat(msg.payload.Max))\n\nmsg.payload = { \"SONAR_MIN\": parseFloat(msg.payload.Min), \"SONAR_MAX\": parseFloat(msg.payload.Max) }\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 240,
+        "wires": [
+            [
+                "4de1fb0565a38dd2"
+            ]
+        ]
+    },
+    {
+        "id": "22b89a8a12a029fe",
+        "type": "inject",
+        "z": "829f0f27baac9fee",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "a52b542c6392c157"
+            ]
+        ]
+    },
+    {
+        "id": "051930ac3ac4a449",
+        "type": "function",
+        "z": "829f0f27baac9fee",
+        "name": "Set defaut value",
+        "func": "// Si le fichier DynEnvVar.json n'existe pas on load les var env\nlet Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(env.get(\"SONAR_MIN\")))\nglobal.set(Max, parseFloat(env.get(\"SONAR_MAX\")))",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4de1fb0565a38dd2",
+        "type": "file",
+        "z": "829f0f27baac9fee",
+        "name": "DynEnvVar",
+        "filename": "/data/DynEnvVar.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 830,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a52b542c6392c157",
+        "type": "file in",
+        "z": "829f0f27baac9fee",
+        "name": "DynEnvVar",
+        "filename": "/data/DynEnvVar.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [
+                "21bd404c806cb129"
+            ]
+        ]
+    },
+    {
+        "id": "d93ce52835a7c33f",
+        "type": "catch",
+        "z": "829f0f27baac9fee",
+        "name": "File not exist",
+        "scope": [
+            "a52b542c6392c157"
+        ],
+        "uncaught": false,
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "051930ac3ac4a449"
+            ]
+        ]
+    },
+    {
+        "id": "21bd404c806cb129",
+        "type": "function",
+        "z": "829f0f27baac9fee",
+        "name": "Set defaut value",
+        "func": "// Si le fichier DynEnvVar.json existe on load son contenu dans les variable globale\n\nlet data = JSON.parse(msg.payload)\n\nlet Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(data.SONAR_MIN))\nglobal.set(Max, parseFloat(data.SONAR_MAX))",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 60,
+        "wires": [
+            []
         ]
     }
 ]
