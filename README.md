@@ -7,7 +7,7 @@ Le module central de contrôle du système est un Raspberry Pi modèle 3 B. Il e
 Réaliser un un update et un upgrade
 
 ```
-sudo apt-get update && sudo apt-get upgrade
+sudo apt-get update && sudo apt-get upgrade -y
 ```
 
 Activer l'interface 1-Wire sur le Raspberry Pi
@@ -19,7 +19,7 @@ Installer Docker
 ```
 curl -sSL https://get.docker.com | sh
 sudo usermod -aG docker $USER
-logout
+sudo reboot
 ```
 
 Installer git
