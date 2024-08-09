@@ -1,5 +1,7 @@
-
-NodeRed/Data/*
+*.backup
+**.config.*
+**.sessions.json
+**package.json
 
 # Logs
 logs
