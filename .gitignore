@@ -1,4 +1,6 @@
 
+NodeRed/Data/*
+
 # Logs
 logs
 *.log
