@@ -69,10 +69,9 @@ PIN_TRIG=16
 PIN_ECHO=18
 ```
 
-Les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier .env a sauver sur le Raspberry PI:
+Les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier NodeRed/Data/config.json:
 ```
-SONAR_MAX=72
-SONAR_MIN=7
+{"SONAR_MIN":7,"SONAR_MAX":72}
 ```
 
 ## CloudFlared
@@ -87,9 +86,12 @@ CLOUDFLARED_TOKEN=djyugricbd...
 ```
 PIN_TRIG=16
 PIN_ECHO=18
-SONAR_MAX=72
-SONAR_MIN=7
 CLOUDFLARED_TOKEN=djyugricbd...
+```
+
+## Le fichier config.json:
+```
+{"SONAR_MIN":8,"SONAR_MAX":72}
 ```
 
 # Update
@@ -98,4 +100,3 @@ Ajouter le package NodeRed à installer dans le fichier NodeRed/Configuration/do
 RUN npm install xxx
 ```
 Copier le nouveau fichier flows.json sous NodeRed/Data
-
