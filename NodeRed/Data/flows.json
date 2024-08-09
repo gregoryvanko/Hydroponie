@@ -579,7 +579,7 @@
         "type": "function",
         "z": "8be2de6d3dfabc6a",
         "name": "bloque si au dessu de max value",
-        "func": "let SONAR_MAX = parseInt(global.get(\"SONAR_MAX\")) || parseFloat(env.get(\"SONAR_MAX\"))\nlet MaxValue = SONAR_MAX + (SONAR_MAX*0.1)\n\nif (msg.payload < MaxValue){\n    return msg;\n} else {\n    node.warn(\"la valeur mesurée depasse la limite max\");\n}",
+        "func": "let SONAR_MAX = parseInt(global.get(\"SONAR_MAX\"))\nlet MaxValue = SONAR_MAX + (SONAR_MAX*0.1)\n\nif (msg.payload < MaxValue){\n    return msg;\n} else {\n    node.warn(\"la valeur mesurée depasse la limite max\");\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -599,7 +599,7 @@
         "type": "function",
         "z": "8be2de6d3dfabc6a",
         "name": "Range",
-        "func": "let data = Number.parseFloat(msg.payload)\n\nlet inMin = global.get(\"SONAR_MIN\") || parseFloat(env.get(\"SONAR_MIN\"))\nlet inMax = global.get(\"SONAR_MAX\") || parseFloat(env.get(\"SONAR_MAX\"))\n\nlet outMin = 100\nlet outMax = 0\n\nlet range = (data - inMin) * (outMax - outMin) / (inMax - inMin) + outMin\nrange = range.toFixed(0)\nmsg.payload = range\n\nreturn msg;",
+        "func": "let data = Number.parseFloat(msg.payload)\n\nlet inMin = global.get(\"SONAR_MIN\")\nlet inMax = global.get(\"SONAR_MAX\")\n\nlet outMin = 100\nlet outMax = 0\n\nlet range = (data - inMin) * (outMax - outMin) / (inMax - inMin) + outMin\nrange = range.toFixed(0)\nmsg.payload = range\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -681,7 +681,7 @@
         "type": "function",
         "z": "829f0f27baac9fee",
         "name": "Set defaut",
-        "func": "let inMin = global.get(\"SONAR_MIN\") || parseFloat(env.get(\"SONAR_MIN\"))\nlet inMax = global.get(\"SONAR_MAX\") || parseFloat(env.get(\"SONAR_MAX\"))\n\nlet data = {\"Min\" : inMin, \"Max\" : inMax}\nmsg.payload = data\n\nreturn msg;",
+        "func": "let inMin = global.get(\"SONAR_MIN\")\nlet inMax = global.get(\"SONAR_MAX\")\n\nlet data = {\"Min\" : inMin, \"Max\" : inMax}\nmsg.payload = data\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -729,7 +729,7 @@
         "type": "function",
         "z": "829f0f27baac9fee",
         "name": "Set defaut value",
-        "func": "let Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(msg.payload.Min))\nglobal.set(Max, parseFloat(msg.payload.Max))\n\nmsg.payload = { \"SONAR_MIN\": parseFloat(msg.payload.Min), \"SONAR_MAX\": parseFloat(msg.payload.Max) }\nreturn msg",
+        "func": "let Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(msg.payload.Min))\nglobal.set(Max, parseFloat(msg.payload.Max))\n\n// preparer le payload pour modifier le fichier\nmsg.payload = { \"SONAR_MIN\": parseFloat(msg.payload.Min), \"SONAR_MAX\": parseFloat(msg.payload.Max) }\nreturn msg",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -778,7 +778,7 @@
         "type": "function",
         "z": "829f0f27baac9fee",
         "name": "Set defaut value",
-        "func": "// Si le fichier DynEnvVar.json n'existe pas on load les var env\nlet Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(env.get(\"SONAR_MIN\")))\nglobal.set(Max, parseFloat(env.get(\"SONAR_MAX\")))",
+        "func": "// Si le fichier config.json n'existe pas on ajoute des valeur par defaut\nlet Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nlet defautMin = 7\nlet defautMax = 72\n\n// set global variable\nglobal.set(Min, defautMin)\nglobal.set(Max, defautMax)\n\n// preparer le payload pour créer le fichier config.json\nmsg.payload = { \"SONAR_MIN\": parseFloat(msg.payload.Min), \"SONAR_MAX\": parseFloat(msg.payload.Max) }\nreturn msg",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -788,21 +788,23 @@
         "x": 380,
         "y": 120,
         "wires": [
-            []
+            [
+                "55cbe8bef5d888df"
+            ]
         ]
     },
     {
         "id": "4de1fb0565a38dd2",
         "type": "file",
         "z": "829f0f27baac9fee",
-        "name": "DynEnvVar",
-        "filename": "/data/DynEnvVar.json",
+        "name": "Set configuration file",
+        "filename": "/data/config.json",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 830,
+        "x": 860,
         "y": 240,
         "wires": [
             []
@@ -812,15 +814,15 @@
         "id": "a52b542c6392c157",
         "type": "file in",
         "z": "829f0f27baac9fee",
-        "name": "DynEnvVar",
-        "filename": "/data/DynEnvVar.json",
+        "name": "Read Config file",
+        "filename": "/data/config.json",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 330,
+        "x": 340,
         "y": 60,
         "wires": [
             [
@@ -859,6 +861,23 @@
         "libs": [],
         "x": 580,
         "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "55cbe8bef5d888df",
+        "type": "file",
+        "z": "829f0f27baac9fee",
+        "name": "Set configuration file",
+        "filename": "/data/config.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 600,
+        "y": 120,
         "wires": [
             []
         ]
