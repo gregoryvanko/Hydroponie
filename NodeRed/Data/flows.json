@@ -599,7 +599,7 @@
         "type": "function",
         "z": "8be2de6d3dfabc6a",
         "name": "Range",
-        "func": "let data = Number.parseFloat(msg.payload)\n\nlet inMin = global.get(\"SONAR_MIN\")\nlet inMax = global.get(\"SONAR_MAX\")\n\nlet outMin = 100\nlet outMax = 0\n\nlet range = (data - inMin) * (outMax - outMin) / (inMax - inMin) + outMin\nrange = range.toFixed(0)\nmsg.payload = range\n\nreturn msg;",
+        "func": "let data = Number.parseFloat(msg.payload)\n\nlet inMin = global.get(\"SONAR_MIN\")\nlet inMax = global.get(\"SONAR_MAX\")\n\nlet outMin = 100\nlet outMax = 0\n\n//let range = (data - inMin) * (outMax - outMin) / (inMax - inMin) + outMin\nlet range = ( 1 -((data - inMin) / (inMax - inMin))) *100\nrange = range.toFixed(0)\nmsg.payload = range\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
