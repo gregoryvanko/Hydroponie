@@ -22,6 +22,47 @@
         "env": []
     },
     {
+        "id": "64750ab7c62dcc42",
+        "type": "group",
+        "z": "829f0f27baac9fee",
+        "name": "Initiation",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "22b89a8a12a029fe",
+            "051930ac3ac4a449",
+            "a52b542c6392c157",
+            "d93ce52835a7c33f",
+            "21bd404c806cb129",
+            "55cbe8bef5d888df"
+        ],
+        "x": 54,
+        "y": 19,
+        "w": 732,
+        "h": 142
+    },
+    {
+        "id": "024ee163770b1f3c",
+        "type": "group",
+        "z": "829f0f27baac9fee",
+        "name": "Get & Set inputs value",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "9d06d2dccec353ea",
+            "bcd5b67d70ab3d4a",
+            "de7fc0e2fa34aeaa",
+            "795330a9fc23aa21",
+            "4de1fb0565a38dd2"
+        ],
+        "x": 54,
+        "y": 199,
+        "w": 992,
+        "h": 82
+    },
+    {
         "id": "8f35003b0cc36ee5",
         "type": "ui_tab",
         "name": "Value",
@@ -241,7 +282,7 @@
         "z": "ec5bd3851ded0af3",
         "name": "TempSensor1",
         "sensorid": "28-7fbb411f64ff",
-        "timer": "0.2",
+        "timer": "5",
         "x": 130,
         "y": 220,
         "wires": [
@@ -442,7 +483,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "12",
+        "repeat": "300",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -635,6 +676,7 @@
         "id": "9d06d2dccec353ea",
         "type": "ui_form",
         "z": "829f0f27baac9fee",
+        "g": "024ee163770b1f3c",
         "name": "Input",
         "label": "Input",
         "group": "acfb3ac3c77092b6",
@@ -668,7 +710,7 @@
         "topicType": "msg",
         "splitLayout": false,
         "className": "",
-        "x": 470,
+        "x": 530,
         "y": 240,
         "wires": [
             [
@@ -680,6 +722,7 @@
         "id": "bcd5b67d70ab3d4a",
         "type": "function",
         "z": "829f0f27baac9fee",
+        "g": "024ee163770b1f3c",
         "name": "Set defaut",
         "func": "let inMin = global.get(\"SONAR_MIN\")\nlet inMax = global.get(\"SONAR_MAX\")\n\nlet data = {\"Min\" : inMin, \"Max\" : inMax}\nmsg.payload = data\n\nreturn msg;",
         "outputs": 1,
@@ -688,7 +731,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 290,
+        "x": 350,
         "y": 240,
         "wires": [
             [
@@ -700,6 +743,7 @@
         "id": "de7fc0e2fa34aeaa",
         "type": "ui_button",
         "z": "829f0f27baac9fee",
+        "g": "024ee163770b1f3c",
         "name": "Get input value",
         "group": "acfb3ac3c77092b6",
         "order": 1,
@@ -716,7 +760,7 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 100,
+        "x": 160,
         "y": 240,
         "wires": [
             [
@@ -728,6 +772,7 @@
         "id": "795330a9fc23aa21",
         "type": "function",
         "z": "829f0f27baac9fee",
+        "g": "024ee163770b1f3c",
         "name": "Set defaut value",
         "func": "let Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(msg.payload.Min))\nglobal.set(Max, parseFloat(msg.payload.Max))\n\n// preparer le payload pour modifier le fichier\nmsg.payload = { \"SONAR_MIN\": parseFloat(msg.payload.Min), \"SONAR_MAX\": parseFloat(msg.payload.Max) }\nreturn msg",
         "outputs": 1,
@@ -736,7 +781,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
+        "x": 700,
         "y": 240,
         "wires": [
             [
@@ -748,6 +793,7 @@
         "id": "22b89a8a12a029fe",
         "type": "inject",
         "z": "829f0f27baac9fee",
+        "g": "64750ab7c62dcc42",
         "name": "",
         "props": [
             {
@@ -765,7 +811,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 110,
+        "x": 170,
         "y": 60,
         "wires": [
             [
@@ -777,6 +823,7 @@
         "id": "051930ac3ac4a449",
         "type": "function",
         "z": "829f0f27baac9fee",
+        "g": "64750ab7c62dcc42",
         "name": "Set defaut value",
         "func": "// Si le fichier config.json n'existe pas on ajoute des valeur par defaut\nlet Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nlet defautMin = 7\nlet defautMax = 72\n\n// set global variable\nglobal.set(Min, defautMin)\nglobal.set(Max, defautMax)\n\n// preparer le payload pour créer le fichier config.json\nmsg.payload = { \"SONAR_MIN\": parseFloat(msg.payload.Min), \"SONAR_MAX\": parseFloat(msg.payload.Max) }\nreturn msg",
         "outputs": 1,
@@ -785,7 +832,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 380,
+        "x": 440,
         "y": 120,
         "wires": [
             [
@@ -797,6 +844,7 @@
         "id": "4de1fb0565a38dd2",
         "type": "file",
         "z": "829f0f27baac9fee",
+        "g": "024ee163770b1f3c",
         "name": "Set configuration file",
         "filename": "/data/config.json",
         "filenameType": "str",
@@ -804,7 +852,7 @@
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 860,
+        "x": 920,
         "y": 240,
         "wires": [
             []
@@ -814,6 +862,7 @@
         "id": "a52b542c6392c157",
         "type": "file in",
         "z": "829f0f27baac9fee",
+        "g": "64750ab7c62dcc42",
         "name": "Read Config file",
         "filename": "/data/config.json",
         "filenameType": "str",
@@ -822,7 +871,7 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 340,
+        "x": 400,
         "y": 60,
         "wires": [
             [
@@ -834,12 +883,13 @@
         "id": "d93ce52835a7c33f",
         "type": "catch",
         "z": "829f0f27baac9fee",
+        "g": "64750ab7c62dcc42",
         "name": "File not exist",
         "scope": [
             "a52b542c6392c157"
         ],
         "uncaught": false,
-        "x": 150,
+        "x": 210,
         "y": 120,
         "wires": [
             [
@@ -851,6 +901,7 @@
         "id": "21bd404c806cb129",
         "type": "function",
         "z": "829f0f27baac9fee",
+        "g": "64750ab7c62dcc42",
         "name": "Set defaut value",
         "func": "// Si le fichier DynEnvVar.json existe on load son contenu dans les variable globale\n\nlet data = JSON.parse(msg.payload)\n\nlet Min = \"SONAR_MIN\"\nlet Max = \"SONAR_MAX\"\n\nglobal.set(Min, parseFloat(data.SONAR_MIN))\nglobal.set(Max, parseFloat(data.SONAR_MAX))",
         "outputs": 1,
@@ -859,7 +910,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 580,
+        "x": 640,
         "y": 60,
         "wires": [
             []
@@ -869,6 +920,7 @@
         "id": "55cbe8bef5d888df",
         "type": "file",
         "z": "829f0f27baac9fee",
+        "g": "64750ab7c62dcc42",
         "name": "Set configuration file",
         "filename": "/data/config.json",
         "filenameType": "str",
@@ -876,7 +928,7 @@
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 600,
+        "x": 660,
         "y": 120,
         "wires": [
             []
