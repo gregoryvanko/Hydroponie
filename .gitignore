@@ -2,6 +2,7 @@
 **.config.*
 **.sessions.json
 **package.json
+node_modules
 
 # Logs
 logs
