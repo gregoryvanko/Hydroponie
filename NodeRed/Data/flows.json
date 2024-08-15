@@ -404,7 +404,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "gtype": "gage",
+        "gtype": "wave",
         "title": "Niveau Eau",
         "label": "%",
         "format": "{{value}}",
@@ -417,6 +417,8 @@
         ],
         "seg1": "10",
         "seg2": "20",
+        "diff": false,
+        "className": "",
         "x": 910,
         "y": 160,
         "wires": []
