@@ -1,17 +1,41 @@
 [
     {
+        "id": "37bc5d1b0738c09e",
+        "type": "tab",
+        "label": "CAN Bus",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "ec5bd3851ded0af3",
         "type": "tab",
-        "label": "Temperature",
+        "label": "Capteur Temperature",
         "disabled": false,
         "info": ""
     },
     {
         "id": "8be2de6d3dfabc6a",
         "type": "tab",
-        "label": "Niveau eau",
+        "label": "Capteur Niveau eau",
         "disabled": false,
         "info": ""
+    },
+    {
+        "id": "68559bc850822b28",
+        "type": "tab",
+        "label": "Capteur Eau citerne",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cd0de7ec7d7b0cc3",
+        "type": "tab",
+        "label": "Capteur TDS",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
     {
         "id": "829f0f27baac9fee",
@@ -178,21 +202,11 @@
         "collapse": false
     },
     {
-        "id": "b669e583f039b061",
-        "type": "ui_group",
-        "name": "Gauge",
-        "tab": "6bce420ab49c6829",
-        "order": 3,
-        "disp": false,
-        "width": "6",
-        "collapse": false
-    },
-    {
         "id": "cfb206593b61e545",
         "type": "ui_group",
         "name": "Temperature",
         "tab": "6bce420ab49c6829",
-        "order": 1,
+        "order": 3,
         "disp": false,
         "width": "12",
         "collapse": false,
@@ -212,7 +226,7 @@
         "type": "ui_group",
         "name": "Niveau Eau",
         "tab": "6bce420ab49c6829",
-        "order": 2,
+        "order": 4,
         "disp": false,
         "width": "12",
         "collapse": false,
@@ -230,6 +244,173 @@
         "className": ""
     },
     {
+        "id": "4851596e52d14044",
+        "type": "socketcan-config",
+        "interface": "can0"
+    },
+    {
+        "id": "bb1c440df132940b",
+        "type": "ui_group",
+        "name": "TDS",
+        "tab": "6bce420ab49c6829",
+        "order": 5,
+        "disp": true,
+        "width": 12,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9a5eecc837c8c607",
+        "type": "ui_group",
+        "name": "Statut",
+        "tab": "6bce420ab49c6829",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "89b0847a90cea17c",
+        "type": "function",
+        "z": "37bc5d1b0738c09e",
+        "name": "canid split",
+        "func": "let id = msg.payload.canid\nif (id == 0x100){\n    return [msg, null];\n} else if (id == 0x200){\n    return [null, msg];\n} else {\n    node.error(\"canid not found il function node\", msg);\n}\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 300,
+        "wires": [
+            [
+                "fcc3a795438a4058"
+            ],
+            [
+                "c0b0f0de86a2bbeb"
+            ]
+        ]
+    },
+    {
+        "id": "3d95f03f794eb5cb",
+        "type": "debug",
+        "z": "37bc5d1b0738c09e",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "ef35e583fbbb9a9f",
+        "type": "socketcan-out",
+        "z": "37bc5d1b0738c09e",
+        "name": "socketcan-out",
+        "config": "4851596e52d14044",
+        "x": 170,
+        "y": 300,
+        "wires": [
+            [
+                "89b0847a90cea17c"
+            ]
+        ]
+    },
+    {
+        "id": "9ace933999cf6a78",
+        "type": "debug",
+        "z": "37bc5d1b0738c09e",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fcc3a795438a4058",
+        "type": "function",
+        "z": "37bc5d1b0738c09e",
+        "name": "MSG 0X100 Can to Json",
+        "func": "let data = Buffer.from(msg.payload.data) \nlet out = { \n    \"eau\": data.readInt8(0),\n    \"temp\": data.readFloatLE(1).toFixed(1)\n    }\n\nmsg.payload = out\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 240,
+        "wires": [
+            [
+                "3d95f03f794eb5cb",
+                "be6051baf13d6e8d"
+            ]
+        ]
+    },
+    {
+        "id": "c0b0f0de86a2bbeb",
+        "type": "function",
+        "z": "37bc5d1b0738c09e",
+        "name": "MSG 0X200 Can to Json",
+        "func": "let data = Buffer.from(msg.payload.data) \nlet out = { \n    \"sonar\": data.readFloatLE(0).toFixed(2),\n    \"TDS\": data.readFloatLE(4).toFixed(2)\n    }\n\nmsg.payload = out\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 340,
+        "wires": [
+            [
+                "9ace933999cf6a78",
+                "e79b5c9fc3ef49b1"
+            ]
+        ]
+    },
+    {
+        "id": "be6051baf13d6e8d",
+        "type": "link out",
+        "z": "37bc5d1b0738c09e",
+        "name": "CAN100",
+        "mode": "link",
+        "links": [
+            "6e9ca9b263d9e303",
+            "513a71f57ce1b0a6",
+            "51d8b2319b5abecd"
+        ],
+        "x": 855,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e79b5c9fc3ef49b1",
+        "type": "link out",
+        "z": "37bc5d1b0738c09e",
+        "name": "CAN200",
+        "mode": "link",
+        "links": [
+            "b16d7992a3b9dde5",
+            "85424e1e25daf62e"
+        ],
+        "x": 835,
+        "y": 340,
+        "wires": []
+    },
+    {
         "id": "98f86843821646a9",
         "type": "function",
         "z": "ec5bd3851ded0af3",
@@ -237,7 +418,7 @@
         "func": "let Name = \"TempSensor1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
         "noerr": 0,
-        "x": 770,
+        "x": 710,
         "y": 220,
         "wires": [
             []
@@ -255,7 +436,7 @@
         "label": "Temperature Cuve",
         "format": "{{msg.payload}} °c",
         "layout": "col-center",
-        "x": 480,
+        "x": 420,
         "y": 160,
         "wires": []
     },
@@ -263,31 +444,21 @@
         "id": "307d0165113a9d24",
         "type": "function",
         "z": "ec5bd3851ded0af3",
-        "name": "Arrondi",
-        "func": "let arrondi = Number.parseFloat(msg.payload).toFixed(1)\nmsg.payload = arrondi.toString()\nreturn msg",
+        "name": "Get eau",
+        "func": "let arrondi = Number.parseFloat(msg.payload.temp).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
-        "x": 300,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
         "y": 220,
         "wires": [
             [
                 "4b688510d5c88e78",
-                "216539a959245c36"
-            ]
-        ]
-    },
-    {
-        "id": "193d2876df55e133",
-        "type": "ds18b20",
-        "z": "ec5bd3851ded0af3",
-        "name": "TempSensor1",
-        "sensorid": "28-7fbb411f64ff",
-        "timer": "5",
-        "x": 130,
-        "y": 220,
-        "wires": [
-            [
-                "307d0165113a9d24"
+                "216539a959245c36",
+                "c60c294f8a6d343a"
             ]
         ]
     },
@@ -308,7 +479,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 510,
+        "x": 450,
         "y": 220,
         "wires": [
             [
@@ -334,9 +505,9 @@
         "dot": false,
         "ymin": "",
         "ymax": "",
-        "removeOlder": "2",
+        "removeOlder": "6",
         "removeOlderPoints": "",
-        "removeOlderUnit": "86400",
+        "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
         "useUTC": false,
@@ -354,11 +525,43 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 750,
+        "x": 690,
         "y": 160,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "6e9ca9b263d9e303",
+        "type": "link in",
+        "z": "ec5bd3851ded0af3",
+        "name": "link in 1",
+        "links": [
+            "be6051baf13d6e8d"
+        ],
+        "x": 135,
+        "y": 220,
+        "wires": [
+            [
+                "307d0165113a9d24"
+            ]
+        ]
+    },
+    {
+        "id": "c60c294f8a6d343a",
+        "type": "debug",
+        "z": "ec5bd3851ded0af3",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 280,
+        "wires": []
     },
     {
         "id": "ac1978049d2efa5a",
@@ -368,7 +571,7 @@
         "func": "let Name = \"Ultrason1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
         "noerr": 0,
-        "x": 1200,
+        "x": 1140,
         "y": 220,
         "wires": [
             []
@@ -391,7 +594,7 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 483,
+        "x": 423,
         "y": 153,
         "wires": []
     },
@@ -400,8 +603,8 @@
         "type": "ui_gauge",
         "z": "8be2de6d3dfabc6a",
         "name": "",
-        "group": "b669e583f039b061",
-        "order": 1,
+        "group": "9a5eecc837c8c607",
+        "order": 2,
         "width": 0,
         "height": 0,
         "gtype": "wave",
@@ -419,66 +622,9 @@
         "seg2": "20",
         "diff": false,
         "className": "",
-        "x": 910,
+        "x": 850,
         "y": 160,
         "wires": []
-    },
-    {
-        "id": "1a5523e045e9f691",
-        "type": "exec",
-        "z": "8be2de6d3dfabc6a",
-        "command": "python3 /data/Ultrason.py",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "Ultrason.py",
-        "x": 274,
-        "y": 237,
-        "wires": [
-            [
-                "5ab05137dc585294",
-                "fc15b10661ba1546",
-                "70fa6172b52f5a0a"
-            ],
-            [
-                "ad7e14091ae52074"
-            ],
-            [
-                "b0533519d75fff2b"
-            ]
-        ]
-    },
-    {
-        "id": "7a5136c2d37bb302",
-        "type": "inject",
-        "z": "8be2de6d3dfabc6a",
-        "name": "Autostart",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 98,
-        "y": 237,
-        "wires": [
-            [
-                "1a5523e045e9f691"
-            ]
-        ]
     },
     {
         "id": "5ab05137dc585294",
@@ -492,40 +638,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 467,
-        "y": 84,
-        "wires": []
-    },
-    {
-        "id": "ad7e14091ae52074",
-        "type": "debug",
-        "z": "8be2de6d3dfabc6a",
-        "name": "debug 2",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 475,
-        "y": 285,
-        "wires": []
-    },
-    {
-        "id": "b0533519d75fff2b",
-        "type": "debug",
-        "z": "8be2de6d3dfabc6a",
-        "name": "debug 3",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 481,
-        "y": 363,
+        "x": 400,
+        "y": 300,
         "wires": []
     },
     {
@@ -545,7 +659,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 950,
+        "x": 890,
         "y": 220,
         "wires": [
             [
@@ -571,9 +685,9 @@
         "dot": false,
         "ymin": "",
         "ymax": "",
-        "removeOlder": "2",
+        "removeOlder": "6",
         "removeOlderPoints": "",
-        "removeOlderUnit": "86400",
+        "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
         "useUTC": false,
@@ -591,7 +705,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1190,
+        "x": 1130,
         "y": 160,
         "wires": [
             []
@@ -609,7 +723,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
+        "x": 480,
         "y": 220,
         "wires": [
             [
@@ -629,7 +743,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
+        "x": 690,
         "y": 220,
         "wires": [
             [
@@ -637,6 +751,354 @@
                 "024109f0c5f6eb73"
             ]
         ]
+    },
+    {
+        "id": "b16d7992a3b9dde5",
+        "type": "link in",
+        "z": "8be2de6d3dfabc6a",
+        "name": "link in 2",
+        "links": [
+            "e79b5c9fc3ef49b1"
+        ],
+        "x": 165,
+        "y": 220,
+        "wires": [
+            [
+                "6cd605785a15d0cf"
+            ]
+        ]
+    },
+    {
+        "id": "6cd605785a15d0cf",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "name": "get sonar",
+        "func": "let data = Number.parseFloat(msg.payload.sonar).toFixed(0)\nmsg.payload = data.toString()\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 220,
+        "wires": [
+            [
+                "70fa6172b52f5a0a",
+                "fc15b10661ba1546",
+                "5ab05137dc585294"
+            ]
+        ]
+    },
+    {
+        "id": "5cee09d08af2609f",
+        "type": "function",
+        "z": "68559bc850822b28",
+        "name": "Save CapteurEau",
+        "func": "let Name = \"CapteurEau1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e4347e83ecfe6fc",
+        "type": "ui_text",
+        "z": "68559bc850822b28",
+        "group": "80145f6438d993ee",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Capteur eau",
+        "label": "Capteur eau",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 390,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "aeac2886241e3dbc",
+        "type": "function",
+        "z": "68559bc850822b28",
+        "name": "Get eau",
+        "func": "let data = msg.payload.eau\nmsg.payload = data\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "8e4347e83ecfe6fc",
+                "54d6e2c871c5a7cb",
+                "5f0821d809ae7948",
+                "38d36b45d7ce49f7"
+            ]
+        ]
+    },
+    {
+        "id": "54d6e2c871c5a7cb",
+        "type": "delay",
+        "z": "68559bc850822b28",
+        "name": "Garde 1 msg par 10min",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "513a71f57ce1b0a6",
+        "type": "link in",
+        "z": "68559bc850822b28",
+        "name": "link in 3",
+        "links": [
+            "be6051baf13d6e8d"
+        ],
+        "x": 115,
+        "y": 160,
+        "wires": [
+            [
+                "aeac2886241e3dbc"
+            ]
+        ]
+    },
+    {
+        "id": "5f0821d809ae7948",
+        "type": "debug",
+        "z": "68559bc850822b28",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "38d36b45d7ce49f7",
+        "type": "ui_led",
+        "z": "68559bc850822b28",
+        "order": 1,
+        "group": "9a5eecc837c8c607",
+        "width": 0,
+        "height": 0,
+        "label": "Retour Eau",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Retour Eau",
+        "x": 390,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "1a1fd5e5499967da",
+        "type": "function",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "Save TDS",
+        "func": "let Name = \"TDS\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a09c09837690d688",
+        "type": "ui_text",
+        "z": "cd0de7ec7d7b0cc3",
+        "group": "80145f6438d993ee",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "TDS",
+        "label": "TDS",
+        "format": "{{msg.payload}} us",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 370,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "568d51c3cb92ada9",
+        "type": "function",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "Get TDS",
+        "func": "let arrondi = Number.parseFloat(msg.payload.TDS).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 180,
+        "wires": [
+            [
+                "a09c09837690d688",
+                "f5b75ea252016322",
+                "3963a8af38c8a3b8"
+            ]
+        ]
+    },
+    {
+        "id": "f5b75ea252016322",
+        "type": "delay",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "Garde 1 msg par 10min",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 180,
+        "wires": [
+            [
+                "3516b349d65670eb"
+            ]
+        ]
+    },
+    {
+        "id": "3516b349d65670eb",
+        "type": "ui_chart",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "TDS",
+        "group": "bb1c440df132940b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "TDS",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "6",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 650,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "85424e1e25daf62e",
+        "type": "link in",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "link in 4",
+        "links": [
+            "e79b5c9fc3ef49b1"
+        ],
+        "x": 115,
+        "y": 180,
+        "wires": [
+            [
+                "568d51c3cb92ada9"
+            ]
+        ]
+    },
+    {
+        "id": "3963a8af38c8a3b8",
+        "type": "debug",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 240,
+        "wires": []
     },
     {
         "id": "9d06d2dccec353ea",
