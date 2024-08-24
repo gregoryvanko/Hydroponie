@@ -9,8 +9,6 @@ services:
     network_mode: host
     environment:
       - TZ=Europe/Brussels
-      - PIN_TRIG=${PIN_TRIG:-16}
-      - PIN_ECHO=${PIN_ECHO:-18}
     ports:
       - "1880:1880"
     devices:
@@ -19,6 +17,11 @@ services:
       - ./NodeRed/Data:/data
     group_add:
       - dialout
+  
+  gpiod:
+    image: corbosman/pigpiod
+    privileged: true
+    restart: unless-stopped
   
   cloudflared:
     container_name: cloudflared
