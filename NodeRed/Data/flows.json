@@ -254,8 +254,8 @@
         "name": "TDS",
         "tab": "6bce420ab49c6829",
         "order": 5,
-        "disp": true,
-        "width": 12,
+        "disp": false,
+        "width": "12",
         "collapse": false,
         "className": ""
     },
@@ -319,7 +319,8 @@
         "y": 300,
         "wires": [
             [
-                "89b0847a90cea17c"
+                "89b0847a90cea17c",
+                "86a8f8a32c6ba8f0"
             ]
         ]
     },
@@ -411,6 +412,47 @@
         "wires": []
     },
     {
+        "id": "86a8f8a32c6ba8f0",
+        "type": "function",
+        "z": "37bc5d1b0738c09e",
+        "name": "Time last can msg",
+        "func": "const today = new Date()\nlet mm = today.getMonth() + 1; // Months start at 0!\nlet dd = today.getDate();\nlet annee = today.getFullYear();\nlet heure = today.getHours()\nlet minute = today.getMinutes()\nlet seconde = today.getSeconds()\n\nif (dd < 10) dd = '0' + dd;\nif (mm < 10) mm = '0' + mm;\nif (heure < 10) heure = '0' + heure;\nif (minute < 10) minute = '0' + minute;\nif (seconde < 10) seconde = '0' + seconde;\n\nconst formattedToday = dd + '/' + mm + '/' + annee + ' ' + heure + 'h' + minute +':' + seconde;\nmsg.payload = formattedToday\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "052586f1b426b8a9"
+            ]
+        ]
+    },
+    {
+        "id": "052586f1b426b8a9",
+        "type": "ui_text",
+        "z": "37bc5d1b0738c09e",
+        "group": "80145f6438d993ee",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Last CAN msg",
+        "label": "CAN message",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 600,
+        "y": 400,
+        "wires": []
+    },
+    {
         "id": "98f86843821646a9",
         "type": "function",
         "z": "ec5bd3851ded0af3",
@@ -429,7 +471,7 @@
         "type": "ui_text",
         "z": "ec5bd3851ded0af3",
         "group": "80145f6438d993ee",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "name": "TempSensor1",
@@ -582,7 +624,7 @@
         "type": "ui_text",
         "z": "8be2de6d3dfabc6a",
         "group": "80145f6438d993ee",
-        "order": 2,
+        "order": 5,
         "width": 0,
         "height": 0,
         "name": "Ultrason1",
@@ -813,7 +855,7 @@
         "type": "ui_text",
         "z": "68559bc850822b28",
         "group": "80145f6438d993ee",
-        "order": 1,
+        "order": 3,
         "width": 0,
         "height": 0,
         "name": "Capteur eau",
@@ -961,7 +1003,7 @@
         "type": "ui_text",
         "z": "cd0de7ec7d7b0cc3",
         "group": "80145f6438d993ee",
-        "order": 1,
+        "order": 4,
         "width": 0,
         "height": 0,
         "name": "TDS",
