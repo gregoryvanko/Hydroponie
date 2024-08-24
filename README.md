@@ -2,17 +2,48 @@
 Controle d'un système Hydroponie.
 
 Le module central de contrôle du système est un Raspberry Pi modèle 3 B. Il est alimenté par une alimentation externe 5v 3A.
+Un bus de communication CAN informe le module central des données mesurées par les différents capteurs.
 
 ## Installation du RaspberryPi
 Réaliser un un update et un upgrade
-
 ```
 sudo apt-get update && sudo apt-get upgrade -y
 ```
 
-Activer l'interface 1-Wire sur le Raspberry Pi
+Installer can-utils
 ```
-sudo raspi-config
+sudo apt-get install can-utils
+```
+
+Activer la creation du resau can0 a chaque boot en créant un fichier: /etc/systemd/network/80-can.network 
+```
+sudo nano /etc/systemd/network/80-can.network
+```
+Y ajouter le contenu suivant:
+```
+[Match]
+Name=can0
+
+[CAN]
+BitRate=500K
+```
+Reactiver systemd-networkd
+```
+sudo systemctl restart systemd-networkd
+sudo systemctl enable systemd-networkd
+```
+Vérifier que le reseau can0 est existe avec la commande:
+```
+ifconfig
+```
+Vérifier la réception de messages can:
+```
+candump can0
+```
+
+Installer git
+```
+sudo apt install git
 ```
 
 Installer Docker
@@ -22,14 +53,14 @@ sudo usermod -aG docker $USER
 sudo reboot
 ```
 
-Installer git
-```
-sudo apt install git
-```
-
 Cloner le repo git
 ```
 git clone https://github.com/gregoryvanko/Hydroponie.git Docker
+```
+
+Créer un fichier .env dans le répertoire Hydroponie avec le contenu suivant:
+```
+CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
 Créer et exécuter le container
@@ -37,39 +68,8 @@ Créer et exécuter le container
 docker compose up -d
 ```
 
-## GPIO du Raspberry Pi
-![GPIO](./Images/RPI.png)
-
-## Mesure de la temperature
-Pour mesurer la temperature, on utilise une sonde ds18b20.
- 
-Il faut activer l'interface 1-Wire sur le raspberrypi via la commande:
-```
-sudo raspi-config
-```
-
-La mesure se fait via un package NodeRed (il est installé automatiquement lors de la création du container docker):
-```
-node-red-contrib-ds18b20
-```
-
 ## Mesure du niveau d'eau par ultrason
-Pour utiliser le module ultrason, on utilise une sonde SRF04.
- 
-Un script python permet de réaliser une mesure de distance via la sonde. Ce script est exécuté via NodeRed.
-
-La librairie python suivante est nécessaire pour faire fonctionner le script (elle est installée automatiquement lors de la création du container docker):
-```
-sudo apt install python3-RPi.GPIO
-```
-
-Les deux GPIO du module ultrason se configurent dans le fichier .env a sauver sur le Raspberry Pi:
-```
-PIN_TRIG=16
-PIN_ECHO=18
-```
-
-Les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier NodeRed/Data/config.json:
+Pour calculer le pourcentage de volume d'eau, les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier NodeRed/Data/config.json:
 ```
 {"SONAR_MIN":7,"SONAR_MAX":72}
 ```
@@ -82,10 +82,8 @@ Il faut configurer un tunnel dans Claudflare et sauver le token communiqué par 
 CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
-## Le fichier .env a créer sur le Raspberry Pi:
+## Le fichier .env a créer dans le dossier Hydroponie:
 ```
-PIN_TRIG=16
-PIN_ECHO=18
 CLOUDFLARED_TOKEN=djyugricbd...
 ```
 
@@ -99,4 +97,3 @@ Ajouter le package NodeRed à installer dans le fichier NodeRed/Configuration/do
 ```
 RUN npm install xxx
 ```
-Copier le nouveau fichier flows.json sous NodeRed/Data
