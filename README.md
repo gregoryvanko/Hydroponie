@@ -10,6 +10,11 @@ Réaliser un un update et un upgrade
 sudo apt-get update && sudo apt-get upgrade -y
 ```
 
+Installer ntp
+```
+sudo apt install ntp
+```
+
 Installer can-utils
 ```
 sudo apt-get install can-utils
