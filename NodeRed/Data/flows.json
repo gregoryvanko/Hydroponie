@@ -91,7 +91,7 @@
         "type": "ui_tab",
         "name": "Value",
         "icon": "dashboard",
-        "order": 2,
+        "order": 3,
         "disabled": false,
         "hidden": false
     },
@@ -206,9 +206,9 @@
         "type": "ui_group",
         "name": "Temperature",
         "tab": "6bce420ab49c6829",
-        "order": 3,
+        "order": 1,
         "disp": false,
-        "width": "12",
+        "width": 14,
         "collapse": false,
         "className": ""
     },
@@ -217,7 +217,7 @@
         "type": "ui_tab",
         "name": "Graph",
         "icon": "dashboard",
-        "order": 1,
+        "order": 2,
         "disabled": false,
         "hidden": false
     },
@@ -226,9 +226,9 @@
         "type": "ui_group",
         "name": "Niveau Eau",
         "tab": "6bce420ab49c6829",
-        "order": 4,
+        "order": 2,
         "disp": false,
-        "width": "12",
+        "width": 14,
         "collapse": false,
         "className": ""
     },
@@ -253,9 +253,9 @@
         "type": "ui_group",
         "name": "TDS",
         "tab": "6bce420ab49c6829",
-        "order": 5,
+        "order": 3,
         "disp": false,
-        "width": "12",
+        "width": 14,
         "collapse": false,
         "className": ""
     },
@@ -263,12 +263,21 @@
         "id": "9a5eecc837c8c607",
         "type": "ui_group",
         "name": "Statut",
-        "tab": "6bce420ab49c6829",
-        "order": 2,
+        "tab": "6c3e980e58024392",
+        "order": 4,
         "disp": true,
-        "width": "6",
+        "width": "7",
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "6c3e980e58024392",
+        "type": "ui_tab",
+        "name": "Satatut",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
     },
     {
         "id": "89b0847a90cea17c",
@@ -416,7 +425,7 @@
         "type": "function",
         "z": "37bc5d1b0738c09e",
         "name": "Time last can msg",
-        "func": "const today = new Date()\nlet mm = today.getMonth() + 1; // Months start at 0!\nlet dd = today.getDate();\nlet annee = today.getFullYear();\nlet heure = today.getHours()\nlet minute = today.getMinutes()\nlet seconde = today.getSeconds()\n\nif (dd < 10) dd = '0' + dd;\nif (mm < 10) mm = '0' + mm;\nif (heure < 10) heure = '0' + heure;\nif (minute < 10) minute = '0' + minute;\nif (seconde < 10) seconde = '0' + seconde;\n\nconst formattedToday = dd + '/' + mm + '/' + annee + ' ' + heure + 'h' + minute +':' + seconde;\nmsg.payload = formattedToday\nreturn msg",
+        "func": "const today = new Date()\nglobal.set(\"CanMsgTimes\", today) // Save timestamp\n\nlet mm = today.getMonth() + 1; // Months start at 0!\nlet dd = today.getDate();\nlet annee = today.getFullYear();\nlet heure = today.getHours()\nlet minute = today.getMinutes()\nlet seconde = today.getSeconds()\n\nif (dd < 10) dd = '0' + dd;\nif (mm < 10) mm = '0' + mm;\nif (heure < 10) heure = '0' + heure;\nif (minute < 10) minute = '0' + minute;\nif (seconde < 10) seconde = '0' + seconde;\n\nconst formattedToday = dd + '/' + mm + '/' + annee + ' ' + heure + 'h' + minute +':' + seconde;\nmsg.payload = formattedToday\nreturn msg",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -450,6 +459,86 @@
         "color": "#000000",
         "x": 600,
         "y": 400,
+        "wires": []
+    },
+    {
+        "id": "a4daa8d39375c89b",
+        "type": "inject",
+        "z": "37bc5d1b0738c09e",
+        "name": "Check timestamp",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 520,
+        "wires": [
+            [
+                "7f4f15591c09ea0c"
+            ]
+        ]
+    },
+    {
+        "id": "7f4f15591c09ea0c",
+        "type": "function",
+        "z": "37bc5d1b0738c09e",
+        "name": "DeltaTimestamp",
+        "func": "let time = msg.payload\nlet canTime = global.get(\"CanMsgTimes\") || new Date()\nlet delta = (time - canTime)/1000\nlet rounddelta = Math.round(delta)\n\nlet canconnectionstatus = false\n\nif (rounddelta < 10){\n    canconnectionstatus = true\n}\n\nmsg.payload = canconnectionstatus\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 520,
+        "wires": [
+            [
+                "e729539ec74618a0"
+            ]
+        ]
+    },
+    {
+        "id": "e729539ec74618a0",
+        "type": "ui_led",
+        "z": "37bc5d1b0738c09e",
+        "order": 1,
+        "group": "9a5eecc837c8c607",
+        "width": 0,
+        "height": 0,
+        "label": "CAN Statut",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "CAN Statut",
+        "x": 590,
+        "y": 520,
         "wires": []
     },
     {
@@ -500,7 +589,8 @@
             [
                 "4b688510d5c88e78",
                 "216539a959245c36",
-                "c60c294f8a6d343a"
+                "c60c294f8a6d343a",
+                "6cd24b1175d95dcf"
             ]
         ]
     },
@@ -545,8 +635,8 @@
         "interpolate": "linear",
         "nodata": "",
         "dot": false,
-        "ymin": "",
-        "ymax": "",
+        "ymin": "5",
+        "ymax": "25",
         "removeOlder": "6",
         "removeOlderPoints": "",
         "removeOlderUnit": "3600",
@@ -606,6 +696,34 @@
         "wires": []
     },
     {
+        "id": "6cd24b1175d95dcf",
+        "type": "ui_gauge",
+        "z": "ec5bd3851ded0af3",
+        "name": "Temperature",
+        "group": "9a5eecc837c8c607",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "Degré",
+        "format": "{{value}}",
+        "min": "5",
+        "max": "25",
+        "colors": [
+            "#0056d6",
+            "#96d35f",
+            "#ca3838"
+        ],
+        "seg1": "10",
+        "seg2": "20",
+        "diff": false,
+        "className": "",
+        "x": 430,
+        "y": 100,
+        "wires": []
+    },
+    {
         "id": "ac1978049d2efa5a",
         "type": "function",
         "z": "8be2de6d3dfabc6a",
@@ -646,7 +764,7 @@
         "z": "8be2de6d3dfabc6a",
         "name": "",
         "group": "9a5eecc837c8c607",
-        "order": 2,
+        "order": 3,
         "width": 0,
         "height": 0,
         "gtype": "wave",
@@ -725,8 +843,8 @@
         "interpolate": "linear",
         "nodata": "",
         "dot": false,
-        "ymin": "",
-        "ymax": "",
+        "ymin": "0",
+        "ymax": "100",
         "removeOlder": "6",
         "removeOlderPoints": "",
         "removeOlderUnit": "3600",
@@ -953,7 +1071,7 @@
         "id": "38d36b45d7ce49f7",
         "type": "ui_led",
         "z": "68559bc850822b28",
-        "order": 1,
+        "order": 2,
         "group": "9a5eecc837c8c607",
         "width": 0,
         "height": 0,
@@ -992,7 +1110,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 660,
+        "x": 780,
         "y": 180,
         "wires": [
             []
@@ -1036,8 +1154,7 @@
         "wires": [
             [
                 "a09c09837690d688",
-                "f5b75ea252016322",
-                "3963a8af38c8a3b8"
+                "f269dd0f04522a85"
             ]
         ]
     },
@@ -1058,11 +1175,12 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 430,
+        "x": 570,
         "y": 180,
         "wires": [
             [
-                "3516b349d65670eb"
+                "3516b349d65670eb",
+                "533cdaa7deb5160d"
             ]
         ]
     },
@@ -1104,7 +1222,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 650,
+        "x": 770,
         "y": 120,
         "wires": [
             []
@@ -1138,8 +1256,57 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 360,
-        "y": 240,
+        "x": 340,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f269dd0f04522a85",
+        "type": "function",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "/1000",
+        "func": "let value = msg.payload\nvalue = value / 1000\nmsg.payload = value.toFixed(1)\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 180,
+        "wires": [
+            [
+                "f5b75ea252016322",
+                "3963a8af38c8a3b8"
+            ]
+        ]
+    },
+    {
+        "id": "533cdaa7deb5160d",
+        "type": "ui_gauge",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "TDS",
+        "group": "9a5eecc837c8c607",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "TDS",
+        "label": "s",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "3",
+        "colors": [
+            "#f7ce46",
+            "#64c466",
+            "#ca3838"
+        ],
+        "seg1": "1",
+        "seg2": "2",
+        "diff": false,
+        "className": "",
+        "x": 770,
+        "y": 80,
         "wires": []
     },
     {
