@@ -87,6 +87,60 @@
         "h": 82
     },
     {
+        "id": "cd8491ff63c68314",
+        "type": "group",
+        "z": "ec5bd3851ded0af3",
+        "name": "Update Graphe",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "d48beca72ea0e989",
+            "de39c28386fe4c84",
+            "390bacf5cb782b19"
+        ],
+        "x": 134,
+        "y": 379,
+        "w": 612,
+        "h": 82
+    },
+    {
+        "id": "6cea342acd6fbe11",
+        "type": "group",
+        "z": "8be2de6d3dfabc6a",
+        "name": "Update Graphe",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4f2fad3217906941",
+            "2e93e5257cdc6876",
+            "8dfaeb1745400549"
+        ],
+        "x": 154,
+        "y": 379,
+        "w": 572,
+        "h": 82
+    },
+    {
+        "id": "528915db7e5592cb",
+        "type": "group",
+        "z": "cd0de7ec7d7b0cc3",
+        "name": "Update Graphe",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "9db296591727fc03",
+            "76be930a2c6d27f0",
+            "3516b349d65670eb"
+        ],
+        "x": 94,
+        "y": 339,
+        "w": 532,
+        "h": 82
+    },
+    {
         "id": "8f35003b0cc36ee5",
         "type": "ui_tab",
         "name": "Value",
@@ -545,10 +599,14 @@
         "id": "98f86843821646a9",
         "type": "function",
         "z": "ec5bd3851ded0af3",
-        "name": "Save TempSensor1",
-        "func": "let Name = \"TempSensor1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "name": "Save Temperature1",
+        "func": "let Name = msg.topic\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 710,
         "y": 220,
         "wires": [
@@ -563,11 +621,16 @@
         "order": 2,
         "width": 0,
         "height": 0,
-        "name": "TempSensor1",
+        "name": "Temperature1",
         "label": "Temperature Cuve",
         "format": "{{msg.payload}} °c",
         "layout": "col-center",
-        "x": 420,
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 520,
         "y": 160,
         "wires": []
     },
@@ -575,15 +638,15 @@
         "id": "307d0165113a9d24",
         "type": "function",
         "z": "ec5bd3851ded0af3",
-        "name": "Get eau",
-        "func": "let arrondi = Number.parseFloat(msg.payload.temp).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
+        "name": "Get Temperature1",
+        "func": "let arrondi = Number.parseFloat(msg.payload.temp).toFixed(0)\nmsg.payload = arrondi.toString()\nmsg.topic = \"GTemperature1\"\nreturn msg",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 240,
+        "x": 270,
         "y": 220,
         "wires": [
             [
@@ -598,12 +661,12 @@
         "id": "216539a959245c36",
         "type": "delay",
         "z": "ec5bd3851ded0af3",
-        "name": "Garde 1 msg par 10min",
+        "name": "Garde 1 msg/min",
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "10",
+        "nbRateUnits": "1",
         "rateUnits": "minute",
         "randomFirst": "1",
         "randomLast": "5",
@@ -611,11 +674,11 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 450,
+        "x": 490,
         "y": 220,
         "wires": [
             [
-                "d48beca72ea0e989"
+                "98f86843821646a9"
             ]
         ]
     },
@@ -623,7 +686,8 @@
         "id": "d48beca72ea0e989",
         "type": "ui_chart",
         "z": "ec5bd3851ded0af3",
-        "name": "Temperature",
+        "g": "cd8491ff63c68314",
+        "name": "Temperature1",
         "group": "cfb206593b61e545",
         "order": 1,
         "width": 0,
@@ -633,13 +697,13 @@
         "legend": "false",
         "xformat": "HH:mm:ss",
         "interpolate": "linear",
-        "nodata": "",
+        "nodata": "No data",
         "dot": false,
         "ymin": "5",
         "ymax": "25",
-        "removeOlder": "6",
+        "removeOlder": "7",
         "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
+        "removeOlderUnit": "86400",
         "cutout": 0,
         "useOneColor": false,
         "useUTC": false,
@@ -657,8 +721,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 690,
-        "y": 160,
+        "x": 640,
+        "y": 420,
         "wires": [
             []
         ]
@@ -691,7 +755,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 380,
+        "x": 460,
         "y": 280,
         "wires": []
     },
@@ -699,7 +763,7 @@
         "id": "6cd24b1175d95dcf",
         "type": "ui_gauge",
         "z": "ec5bd3851ded0af3",
-        "name": "Temperature",
+        "name": "Temperature1",
         "group": "9a5eecc837c8c607",
         "order": 3,
         "width": 0,
@@ -719,19 +783,74 @@
         "seg2": "20",
         "diff": false,
         "className": "",
-        "x": 430,
+        "x": 520,
         "y": 100,
         "wires": []
+    },
+    {
+        "id": "de39c28386fe4c84",
+        "type": "inject",
+        "z": "ec5bd3851ded0af3",
+        "g": "cd8491ff63c68314",
+        "name": "1/H",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "GTemperature1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 420,
+        "wires": [
+            [
+                "390bacf5cb782b19"
+            ]
+        ]
+    },
+    {
+        "id": "390bacf5cb782b19",
+        "type": "function",
+        "z": "ec5bd3851ded0af3",
+        "g": "cd8491ff63c68314",
+        "name": "Moyenne",
+        "func": "let Name = msg.topic\n\nlet AllData = global.get(Name) || []\n\nif (AllData.length > 0) {\n    let Length = AllData.length\n    let Somme = 0\n    AllData.forEach(function(element) {\n        Somme += Number.parseFloat(element.data)\n    });\n    let Value = Somme / Length\n    msg.payload = Value\n    AllData = []\n    global.set(Name, AllData)\n    return msg \n}\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 420,
+        "wires": [
+            [
+                "d48beca72ea0e989"
+            ]
+        ]
     },
     {
         "id": "ac1978049d2efa5a",
         "type": "function",
         "z": "8be2de6d3dfabc6a",
         "name": "Save Ultrason1",
-        "func": "let Name = \"Ultrason1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "func": "let Name = msg.topic\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
-        "x": 1140,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1200,
         "y": 220,
         "wires": [
             []
@@ -806,12 +925,12 @@
         "id": "5eff6ddb5fb994ed",
         "type": "delay",
         "z": "8be2de6d3dfabc6a",
-        "name": "Garde 1 msg par 10min",
+        "name": "Garde 1 msg/min",
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "10",
+        "nbRateUnits": "1",
         "rateUnits": "minute",
         "randomFirst": "1",
         "randomLast": "5",
@@ -819,11 +938,11 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 890,
+        "x": 910,
         "y": 220,
         "wires": [
             [
-                "8dfaeb1745400549"
+                "ac1978049d2efa5a"
             ]
         ]
     },
@@ -831,6 +950,7 @@
         "id": "8dfaeb1745400549",
         "type": "ui_chart",
         "z": "8be2de6d3dfabc6a",
+        "g": "6cea342acd6fbe11",
         "name": "Niveau eau",
         "group": "211febbd4a9f7ab4",
         "order": 1,
@@ -845,9 +965,9 @@
         "dot": false,
         "ymin": "0",
         "ymax": "100",
-        "removeOlder": "6",
+        "removeOlder": "7",
         "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
+        "removeOlderUnit": "86400",
         "cutout": 0,
         "useOneColor": false,
         "useUTC": false,
@@ -865,8 +985,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1130,
-        "y": 160,
+        "x": 630,
+        "y": 420,
         "wires": [
             []
         ]
@@ -883,7 +1003,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
+        "x": 520,
         "y": 220,
         "wires": [
             [
@@ -903,7 +1023,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 690,
+        "x": 730,
         "y": 220,
         "wires": [
             [
@@ -932,21 +1052,72 @@
         "id": "6cd605785a15d0cf",
         "type": "function",
         "z": "8be2de6d3dfabc6a",
-        "name": "get sonar",
-        "func": "let data = Number.parseFloat(msg.payload.sonar).toFixed(0)\nmsg.payload = data.toString()\nreturn msg;",
+        "name": "get Ultrason1",
+        "func": "let data = Number.parseFloat(msg.payload.sonar).toFixed(0)\nmsg.payload = data.toString()\nmsg.topic = \"GNiveauEau1\"\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
+        "x": 280,
         "y": 220,
         "wires": [
             [
                 "70fa6172b52f5a0a",
                 "fc15b10661ba1546",
                 "5ab05137dc585294"
+            ]
+        ]
+    },
+    {
+        "id": "4f2fad3217906941",
+        "type": "inject",
+        "z": "8be2de6d3dfabc6a",
+        "g": "6cea342acd6fbe11",
+        "name": "1/H",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "GNiveauEau1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 420,
+        "wires": [
+            [
+                "2e93e5257cdc6876"
+            ]
+        ]
+    },
+    {
+        "id": "2e93e5257cdc6876",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "g": "6cea342acd6fbe11",
+        "name": "Moyenne",
+        "func": "let Name = msg.topic\n\nlet AllData = global.get(Name) || []\n\nif (AllData.length > 0) {\n    let Length = AllData.length\n    let Somme = 0\n    AllData.forEach(function(element) {\n        Somme += Number.parseFloat(element.data)\n    });\n    let Value = Somme / Length\n    msg.payload = Value\n    AllData = []\n    global.set(Name, AllData)\n    return msg \n}\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 420,
+        "wires": [
+            [
+                "8dfaeb1745400549"
             ]
         ]
     },
@@ -1016,12 +1187,12 @@
         "id": "54d6e2c871c5a7cb",
         "type": "delay",
         "z": "68559bc850822b28",
-        "name": "Garde 1 msg par 10min",
+        "name": "Garde 1 msg/min",
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "10",
+        "nbRateUnits": "1",
         "rateUnits": "minute",
         "randomFirst": "1",
         "randomLast": "5",
@@ -1029,7 +1200,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 430,
+        "x": 410,
         "y": 160,
         "wires": [
             []
@@ -1103,7 +1274,7 @@
         "type": "function",
         "z": "cd0de7ec7d7b0cc3",
         "name": "Save TDS",
-        "func": "let Name = \"TDS\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "func": "let Name = msg.topic\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -1142,7 +1313,7 @@
         "type": "function",
         "z": "cd0de7ec7d7b0cc3",
         "name": "Get TDS",
-        "func": "let arrondi = Number.parseFloat(msg.payload.TDS).toFixed(0)\nmsg.payload = arrondi.toString()\nreturn msg",
+        "func": "let arrondi = Number.parseFloat(msg.payload.TDS).toFixed(0)\nmsg.payload = arrondi.toString()\nmsg.topic = \"GTDS1\"\nreturn msg",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -1162,12 +1333,12 @@
         "id": "f5b75ea252016322",
         "type": "delay",
         "z": "cd0de7ec7d7b0cc3",
-        "name": "Garde 1 msg par 10min",
+        "name": "Garde 1 msg/min",
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "10",
+        "nbRateUnits": "1",
         "rateUnits": "minute",
         "randomFirst": "1",
         "randomLast": "5",
@@ -1175,12 +1346,11 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 570,
+        "x": 550,
         "y": 180,
         "wires": [
             [
-                "3516b349d65670eb",
-                "533cdaa7deb5160d"
+                "1a1fd5e5499967da"
             ]
         ]
     },
@@ -1188,6 +1358,7 @@
         "id": "3516b349d65670eb",
         "type": "ui_chart",
         "z": "cd0de7ec7d7b0cc3",
+        "g": "528915db7e5592cb",
         "name": "TDS",
         "group": "bb1c440df132940b",
         "order": 1,
@@ -1222,8 +1393,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 770,
-        "y": 120,
+        "x": 550,
+        "y": 380,
         "wires": [
             []
         ]
@@ -1256,8 +1427,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 340,
-        "y": 300,
+        "x": 520,
+        "y": 240,
         "wires": []
     },
     {
@@ -1277,7 +1448,8 @@
         "wires": [
             [
                 "f5b75ea252016322",
-                "3963a8af38c8a3b8"
+                "3963a8af38c8a3b8",
+                "533cdaa7deb5160d"
             ]
         ]
     },
@@ -1305,9 +1477,60 @@
         "seg2": "2",
         "diff": false,
         "className": "",
-        "x": 770,
-        "y": 80,
+        "x": 550,
+        "y": 120,
         "wires": []
+    },
+    {
+        "id": "9db296591727fc03",
+        "type": "inject",
+        "z": "cd0de7ec7d7b0cc3",
+        "g": "528915db7e5592cb",
+        "name": "1/H",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "GTDS1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "76be930a2c6d27f0"
+            ]
+        ]
+    },
+    {
+        "id": "76be930a2c6d27f0",
+        "type": "function",
+        "z": "cd0de7ec7d7b0cc3",
+        "g": "528915db7e5592cb",
+        "name": "Moyenne",
+        "func": "let Name = msg.topic\n\nlet AllData = global.get(Name) || []\n\nif (AllData.length > 0) {\n    let Length = AllData.length\n    let Somme = 0\n    AllData.forEach(function(element) {\n        Somme += Number.parseFloat(element.data)\n    });\n    let Value = Somme / Length\n    msg.payload = Value\n    AllData = []\n    global.set(Name, AllData)\n    return msg \n}\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "3516b349d65670eb"
+            ]
+        ]
     },
     {
         "id": "9d06d2dccec353ea",
