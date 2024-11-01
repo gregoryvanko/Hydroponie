@@ -1,8 +1,9 @@
 # Hydroponie
 Controle d'un système Hydroponie.
 
-Le module central de contrôle du système est un Raspberry Pi modèle 3 B. Il est alimenté par une alimentation externe 5v 3A.
-Un bus de communication CAN informe le module central des données mesurées par les différents capteurs.
+Le module central qui contrôle ls système est un Raspberry Pi modèle 3 B. Il est alimenté par une alimentation externe 5v 3A.
+Le module central échange des messages avec les noeuds hydroponic via un bus de communication CAN via un module USB-CAN.
+Chaque noeud hydroponic informe le module central des données mesurées par ses différents capteurs.
 
 ## Installation du RaspberryPi
 Réaliser un un update et un upgrade
@@ -73,8 +74,12 @@ Créer et exécuter le container
 docker compose up -d
 ```
 
+## Bus CAN
+Connecter les deux cable du bus CAN au module USB-CAN, et connecter ce module à un port USB du RaspberryPi.
+
 ## Mesure du niveau d'eau par ultrason
-Pour calculer le pourcentage de volume d'eau, les distances entre le capteur à ultrason et le niveau d'eau le plus bas (SONAR_MAX) / le plus haut (SONAR_MIN) doivent etre définies dans le fichier NodeRed/Data/config.json:
+Le niveau d'eau de la cuve (exprimé en % d'eau de la cuve) est calculé par rapport à la distance communiquée par un capteur à ultrason sur un noeud hydroponic et la valeur du niveau d'eau le plus bas (SONAR_MAX), et la valeur du niveau d'eau le plus haut (SONAR_MIN).
+Ces deux valeurs doivent etre définies dans le fichier NodeRed/Data/config.json:
 ```
 {"SONAR_MIN":7,"SONAR_MAX":72}
 ```
