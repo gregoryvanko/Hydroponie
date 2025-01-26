@@ -549,7 +549,7 @@
         "type": "function",
         "z": "37bc5d1b0738c09e",
         "name": "DeltaTimestamp",
-        "func": "let time = msg.payload\nlet canconnectionstatus = false\nlet canTime = global.get(\"CanMsgTimes\") || null\n\nif(canTime != null){\n    let delta = (time - canTime) / 1000\n    let rounddelta = Math.round(delta)\n\n    if (rounddelta < 10) {\n        canconnectionstatus = true\n    }\n}\n\nmsg.payload = canconnectionstatus\nreturn msg;",
+        "func": "let time = msg.payload\n// statut de la led\nlet canconnectionstatus = false\nlet canTime = global.get(\"CanMsgTimes\") || null\n\nif(canTime != null){\n    let delta = (time - canTime) / 1000\n    let rounddelta = Math.round(delta)\n\n    if (rounddelta < 10) {\n        canconnectionstatus = true\n    }\n}\n\nmsg.payload = canconnectionstatus\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
