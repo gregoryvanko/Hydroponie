@@ -236,10 +236,10 @@
             "sizes": {
                 "sx": 48,
                 "sy": 48,
-                "gx": 6,
-                "gy": 6,
-                "cx": 6,
-                "cy": 6,
+                "gx": 10,
+                "gy": 10,
+                "cx": 10,
+                "cy": 10,
                 "px": 0,
                 "py": 0
             }
@@ -254,17 +254,6 @@
         "disp": false,
         "width": "6",
         "collapse": false
-    },
-    {
-        "id": "cfb206593b61e545",
-        "type": "ui_group",
-        "name": "Temperature",
-        "tab": "6bce420ab49c6829",
-        "order": 1,
-        "disp": false,
-        "width": 14,
-        "collapse": false,
-        "className": ""
     },
     {
         "id": "6bce420ab49c6829",
@@ -314,24 +303,68 @@
         "className": ""
     },
     {
-        "id": "9a5eecc837c8c607",
-        "type": "ui_group",
-        "name": "Statut",
-        "tab": "6c3e980e58024392",
-        "order": 4,
-        "disp": true,
-        "width": "7",
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "6c3e980e58024392",
         "type": "ui_tab",
-        "name": "Satatut",
+        "name": "Statut",
         "icon": "dashboard",
         "order": 1,
         "disabled": false,
         "hidden": false
+    },
+    {
+        "id": "cfb206593b61e545",
+        "type": "ui_group",
+        "name": "Temperature",
+        "tab": "6bce420ab49c6829",
+        "order": 1,
+        "disp": false,
+        "width": 14,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9a5eecc837c8c607",
+        "type": "ui_group",
+        "name": "Statut",
+        "tab": "6c3e980e58024392",
+        "order": 1,
+        "disp": false,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7be0db36a6d56952",
+        "type": "ui_group",
+        "name": "Niveau Eau",
+        "tab": "6c3e980e58024392",
+        "order": 2,
+        "disp": false,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "be18ae9c0f7a10cf",
+        "type": "ui_group",
+        "name": "Température",
+        "tab": "6c3e980e58024392",
+        "order": 3,
+        "disp": false,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "482091562d9060c1",
+        "type": "ui_group",
+        "name": "TDS",
+        "tab": "6c3e980e58024392",
+        "order": 4,
+        "disp": false,
+        "width": 6,
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "89b0847a90cea17c",
@@ -453,8 +486,7 @@
         "mode": "link",
         "links": [
             "6e9ca9b263d9e303",
-            "513a71f57ce1b0a6",
-            "51d8b2319b5abecd"
+            "513a71f57ce1b0a6"
         ],
         "x": 855,
         "y": 240,
@@ -764,8 +796,8 @@
         "type": "ui_gauge",
         "z": "ec5bd3851ded0af3",
         "name": "Temperature1",
-        "group": "9a5eecc837c8c607",
-        "order": 3,
+        "group": "be18ae9c0f7a10cf",
+        "order": 1,
         "width": 0,
         "height": 0,
         "gtype": "gage",
@@ -882,8 +914,8 @@
         "type": "ui_gauge",
         "z": "8be2de6d3dfabc6a",
         "name": "",
-        "group": "9a5eecc837c8c607",
-        "order": 3,
+        "group": "7be0db36a6d56952",
+        "order": 1,
         "width": 0,
         "height": 0,
         "gtype": "wave",
@@ -1458,8 +1490,8 @@
         "type": "ui_gauge",
         "z": "cd0de7ec7d7b0cc3",
         "name": "TDS",
-        "group": "9a5eecc837c8c607",
-        "order": 4,
+        "group": "482091562d9060c1",
+        "order": 1,
         "width": 0,
         "height": 0,
         "gtype": "gage",
