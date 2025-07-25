@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "68559bc850822b28",
+        "type": "tab",
+        "label": "Capteur Eau citerne",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "ec5bd3851ded0af3",
         "type": "tab",
         "label": "Capteur Temperature",
@@ -22,14 +30,6 @@
         "info": ""
     },
     {
-        "id": "68559bc850822b28",
-        "type": "tab",
-        "label": "Capteur Eau citerne",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "cd0de7ec7d7b0cc3",
         "type": "tab",
         "label": "Capteur TDS",
@@ -41,6 +41,14 @@
         "id": "829f0f27baac9fee",
         "type": "tab",
         "label": "Set Input",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "eadfb4a3a54a2057",
+        "type": "tab",
+        "label": "Shelly",
         "disabled": false,
         "info": "",
         "env": []
@@ -145,7 +153,7 @@
         "type": "ui_tab",
         "name": "Value",
         "icon": "dashboard",
-        "order": 3,
+        "order": 4,
         "disabled": false,
         "hidden": false
     },
@@ -327,6 +335,57 @@
         "type": "ui_group",
         "name": "Statut",
         "tab": "6c3e980e58024392",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2c1deb7f20a3ab6d",
+        "type": "mqtt-broker",
+        "name": "Vanko",
+        "broker": "https://mqtt.vanko.be",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "91b6603591f6423a",
+        "type": "ui_tab",
+        "name": "Action",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "db6b546b02db6c4e",
+        "type": "ui_group",
+        "name": "Pompes",
+        "tab": "91b6603591f6423a",
         "order": 1,
         "disp": true,
         "width": 6,
@@ -595,6 +654,154 @@
         "wires": []
     },
     {
+        "id": "5cee09d08af2609f",
+        "type": "function",
+        "z": "68559bc850822b28",
+        "name": "Save CapteurEau",
+        "func": "let Name = \"CapteurEau1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e4347e83ecfe6fc",
+        "type": "ui_text",
+        "z": "68559bc850822b28",
+        "group": "80145f6438d993ee",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Capteur eau",
+        "label": "Capteur eau",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 390,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "aeac2886241e3dbc",
+        "type": "function",
+        "z": "68559bc850822b28",
+        "name": "Get eau",
+        "func": "let data = msg.payload.eau\nmsg.payload = data\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "8e4347e83ecfe6fc",
+                "54d6e2c871c5a7cb",
+                "5f0821d809ae7948",
+                "38d36b45d7ce49f7"
+            ]
+        ]
+    },
+    {
+        "id": "54d6e2c871c5a7cb",
+        "type": "delay",
+        "z": "68559bc850822b28",
+        "name": "Garde 1 msg/min",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "513a71f57ce1b0a6",
+        "type": "link in",
+        "z": "68559bc850822b28",
+        "name": "link in 3",
+        "links": [
+            "be6051baf13d6e8d"
+        ],
+        "x": 115,
+        "y": 160,
+        "wires": [
+            [
+                "aeac2886241e3dbc"
+            ]
+        ]
+    },
+    {
+        "id": "5f0821d809ae7948",
+        "type": "debug",
+        "z": "68559bc850822b28",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "38d36b45d7ce49f7",
+        "type": "ui_led",
+        "z": "68559bc850822b28",
+        "order": 2,
+        "group": "9a5eecc837c8c607",
+        "width": 0,
+        "height": 0,
+        "label": "Retour Eau",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Retour Eau",
+        "x": 390,
+        "y": 100,
+        "wires": []
+    },
+    {
         "id": "98f86843821646a9",
         "type": "function",
         "z": "ec5bd3851ded0af3",
@@ -764,7 +971,7 @@
         "z": "ec5bd3851ded0af3",
         "name": "Temperature1",
         "group": "9a5eecc837c8c607",
-        "order": 4,
+        "order": 5,
         "width": 0,
         "height": 0,
         "gtype": "gage",
@@ -882,7 +1089,7 @@
         "z": "8be2de6d3dfabc6a",
         "name": "",
         "group": "9a5eecc837c8c607",
-        "order": 3,
+        "order": 4,
         "width": 0,
         "height": 0,
         "gtype": "wave",
@@ -1121,154 +1328,6 @@
         ]
     },
     {
-        "id": "5cee09d08af2609f",
-        "type": "function",
-        "z": "68559bc850822b28",
-        "name": "Save CapteurEau",
-        "func": "let Name = \"CapteurEau1\"\n\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload })\nglobal.set(Name, AllData)",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 690,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8e4347e83ecfe6fc",
-        "type": "ui_text",
-        "z": "68559bc850822b28",
-        "group": "80145f6438d993ee",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "name": "Capteur eau",
-        "label": "Capteur eau",
-        "format": "{{msg.payload}}",
-        "layout": "col-center",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 390,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "aeac2886241e3dbc",
-        "type": "function",
-        "z": "68559bc850822b28",
-        "name": "Get eau",
-        "func": "let data = msg.payload.eau\nmsg.payload = data\nreturn msg",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 220,
-        "y": 160,
-        "wires": [
-            [
-                "8e4347e83ecfe6fc",
-                "54d6e2c871c5a7cb",
-                "5f0821d809ae7948",
-                "38d36b45d7ce49f7"
-            ]
-        ]
-    },
-    {
-        "id": "54d6e2c871c5a7cb",
-        "type": "delay",
-        "z": "68559bc850822b28",
-        "name": "Garde 1 msg/min",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "minute",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 410,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "513a71f57ce1b0a6",
-        "type": "link in",
-        "z": "68559bc850822b28",
-        "name": "link in 3",
-        "links": [
-            "be6051baf13d6e8d"
-        ],
-        "x": 115,
-        "y": 160,
-        "wires": [
-            [
-                "aeac2886241e3dbc"
-            ]
-        ]
-    },
-    {
-        "id": "5f0821d809ae7948",
-        "type": "debug",
-        "z": "68559bc850822b28",
-        "name": "debug 5",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "38d36b45d7ce49f7",
-        "type": "ui_led",
-        "z": "68559bc850822b28",
-        "order": 2,
-        "group": "9a5eecc837c8c607",
-        "width": 0,
-        "height": 0,
-        "label": "Retour Eau",
-        "labelPlacement": "left",
-        "labelAlignment": "left",
-        "colorForValue": [
-            {
-                "color": "#ff0000",
-                "value": "0",
-                "valueType": "num"
-            },
-            {
-                "color": "#008000",
-                "value": "1",
-                "valueType": "num"
-            }
-        ],
-        "allowColorForValueInMessage": false,
-        "shape": "circle",
-        "showGlow": true,
-        "name": "Retour Eau",
-        "x": 390,
-        "y": 100,
-        "wires": []
-    },
-    {
         "id": "1a1fd5e5499967da",
         "type": "function",
         "z": "cd0de7ec7d7b0cc3",
@@ -1458,7 +1517,7 @@
         "z": "cd0de7ec7d7b0cc3",
         "name": "TDS",
         "group": "9a5eecc837c8c607",
-        "order": 5,
+        "order": 6,
         "width": 0,
         "height": 0,
         "gtype": "gage",
@@ -1792,5 +1851,266 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "88999f66ab8c9179",
+        "type": "inject",
+        "z": "eadfb4a3a54a2057",
+        "name": "Toogle",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Toogle",
+        "payloadType": "str",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "e13702a13f98e003"
+            ]
+        ]
+    },
+    {
+        "id": "e13702a13f98e003",
+        "type": "mqtt out",
+        "z": "eadfb4a3a54a2057",
+        "name": "Cmd",
+        "topic": "shelly/cmd",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2c1deb7f20a3ab6d",
+        "x": 370,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "74251a0c38694bee",
+        "type": "ui_led",
+        "z": "eadfb4a3a54a2057",
+        "order": 3,
+        "group": "9a5eecc837c8c607",
+        "width": 0,
+        "height": 0,
+        "label": "Pompe",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "#999999",
+                "value": "2",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Pompe",
+        "x": 540,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "3b5bf1baf660998e",
+        "type": "function",
+        "z": "eadfb4a3a54a2057",
+        "name": "DeltaTimestamp",
+        "func": "let time = msg.payload\nlet ShellyTime = global.get(\"ShellyTime\") || null\n\nif (ShellyTime != null){\n    let delta = (time - ShellyTime) / 1000\n    let rounddelta = Math.round(delta)\n\n    if (rounddelta > 10) {\n        msg.payload = 2\n        return msg;\n    }\n} else {\n    msg.payload = 2\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 420,
+        "wires": [
+            [
+                "74251a0c38694bee",
+                "836fd6bcf73b9280"
+            ]
+        ]
+    },
+    {
+        "id": "14e4e4ead6a3918f",
+        "type": "inject",
+        "z": "eadfb4a3a54a2057",
+        "name": "Check timestamp",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 420,
+        "wires": [
+            [
+                "3b5bf1baf660998e"
+            ]
+        ]
+    },
+    {
+        "id": "ace1b4666da5f9e7",
+        "type": "mqtt in",
+        "z": "eadfb4a3a54a2057",
+        "name": "Shelly/info",
+        "topic": "Shelly/info",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "2c1deb7f20a3ab6d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 80,
+        "y": 280,
+        "wires": [
+            [
+                "2219b408a69bb02a",
+                "74251a0c38694bee",
+                "836fd6bcf73b9280"
+            ]
+        ]
+    },
+    {
+        "id": "2219b408a69bb02a",
+        "type": "function",
+        "z": "eadfb4a3a54a2057",
+        "name": "Time last Shelly msg",
+        "func": "const today = new Date()\nglobal.set(\"ShellyTime\", today) // Save timestamp\n\nlet mm = today.getMonth() + 1; // Months start at 0!\nlet dd = today.getDate();\nlet annee = today.getFullYear();\nlet heure = today.getHours()\nlet minute = today.getMinutes()\nlet seconde = today.getSeconds()\n\nif (dd < 10) dd = '0' + dd;\nif (mm < 10) mm = '0' + mm;\nif (heure < 10) heure = '0' + heure;\nif (minute < 10) minute = '0' + minute;\nif (seconde < 10) seconde = '0' + seconde;\n\nconst formattedToday = dd + '/' + mm + '/' + annee + ' ' + heure + 'h' + minute +':' + seconde;\nmsg.payload = formattedToday\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "e85ec6314cb47044"
+            ]
+        ]
+    },
+    {
+        "id": "e85ec6314cb47044",
+        "type": "ui_text",
+        "z": "eadfb4a3a54a2057",
+        "group": "80145f6438d993ee",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Last Shelly msg",
+        "label": "Shelly message",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 520,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d8bd0e8845115a1c",
+        "type": "ui_button",
+        "z": "eadfb4a3a54a2057",
+        "name": "",
+        "group": "db6b546b02db6c4e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Pompe principale",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "toogle",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "e13702a13f98e003"
+            ]
+        ]
+    },
+    {
+        "id": "836fd6bcf73b9280",
+        "type": "ui_led",
+        "z": "eadfb4a3a54a2057",
+        "order": 3,
+        "group": "db6b546b02db6c4e",
+        "width": 0,
+        "height": 0,
+        "label": "Pompe principale",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "#999999",
+                "value": "2",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Pompe",
+        "x": 540,
+        "y": 380,
+        "wires": []
     }
 ]
