@@ -149,6 +149,82 @@
         "h": 82
     },
     {
+        "id": "22184d3203c59a42",
+        "type": "group",
+        "z": "eadfb4a3a54a2057",
+        "name": "Vérifier si on reçoit régulièrement un message",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "74251a0c38694bee",
+            "3b5bf1baf660998e",
+            "14e4e4ead6a3918f",
+            "836fd6bcf73b9280"
+        ],
+        "x": 34,
+        "y": 419,
+        "w": 632,
+        "h": 122
+    },
+    {
+        "id": "dbdadc8ef34435c3",
+        "type": "group",
+        "z": "eadfb4a3a54a2057",
+        "name": "Commander la pompe",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "88999f66ab8c9179",
+            "e13702a13f98e003",
+            "d8bd0e8845115a1c"
+        ],
+        "x": 34,
+        "y": 39,
+        "w": 472,
+        "h": 142
+    },
+    {
+        "id": "4ad63082165590ae",
+        "type": "group",
+        "z": "eadfb4a3a54a2057",
+        "name": "Analyse du msg de statu",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "ace1b4666da5f9e7",
+            "2219b408a69bb02a",
+            "e85ec6314cb47044",
+            "a1bd1e33915e6417",
+            "80d999caa83de4e3",
+            "d1dbc7c2b0acb08d"
+        ],
+        "x": 34,
+        "y": 199,
+        "w": 632,
+        "h": 182
+    },
+    {
+        "id": "0d45f4cb6181c85e",
+        "type": "group",
+        "z": "eadfb4a3a54a2057",
+        "name": "Update Graphe",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "c83c797abd810d76",
+            "be841306d23791f5",
+            "8698fcee1a192748"
+        ],
+        "x": 34,
+        "y": 599,
+        "w": 572,
+        "h": 82
+    },
+    {
         "id": "8f35003b0cc36ee5",
         "type": "ui_tab",
         "name": "Value",
@@ -256,12 +332,13 @@
     {
         "id": "80145f6438d993ee",
         "type": "ui_group",
-        "name": "Value",
+        "name": "Valeurs",
         "tab": "8f35003b0cc36ee5",
-        "order": 1,
-        "disp": false,
+        "order": 2,
+        "disp": true,
         "width": "6",
-        "collapse": false
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "6bce420ab49c6829",
@@ -288,7 +365,7 @@
         "type": "ui_group",
         "name": "Input",
         "tab": "8f35003b0cc36ee5",
-        "order": 2,
+        "order": 3,
         "disp": false,
         "width": "6",
         "collapse": false,
@@ -389,6 +466,28 @@
         "order": 1,
         "disp": true,
         "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "42ecb749994c6d3a",
+        "type": "ui_group",
+        "name": "Message",
+        "tab": "8f35003b0cc36ee5",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c61bc30f9b7b9de8",
+        "type": "ui_group",
+        "name": "Puissance",
+        "tab": "6bce420ab49c6829",
+        "order": 4,
+        "disp": false,
+        "width": "14",
         "collapse": false,
         "className": ""
     },
@@ -556,7 +655,7 @@
         "id": "052586f1b426b8a9",
         "type": "ui_text",
         "z": "37bc5d1b0738c09e",
-        "group": "80145f6438d993ee",
+        "group": "42ecb749994c6d3a",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -676,7 +775,7 @@
         "type": "ui_text",
         "z": "68559bc850822b28",
         "group": "80145f6438d993ee",
-        "order": 3,
+        "order": 2,
         "width": 0,
         "height": 0,
         "name": "Capteur eau",
@@ -824,7 +923,7 @@
         "type": "ui_text",
         "z": "ec5bd3851ded0af3",
         "group": "80145f6438d993ee",
-        "order": 2,
+        "order": 1,
         "width": 0,
         "height": 0,
         "name": "Temperature1",
@@ -1056,7 +1155,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1200,
+        "x": 1140,
         "y": 220,
         "wires": [
             []
@@ -1067,7 +1166,7 @@
         "type": "ui_text",
         "z": "8be2de6d3dfabc6a",
         "group": "80145f6438d993ee",
-        "order": 5,
+        "order": 4,
         "width": 0,
         "height": 0,
         "name": "Ultrason1",
@@ -1350,7 +1449,7 @@
         "type": "ui_text",
         "z": "cd0de7ec7d7b0cc3",
         "group": "80145f6438d993ee",
-        "order": 4,
+        "order": 3,
         "width": 0,
         "height": 0,
         "name": "TDS",
@@ -1856,14 +1955,16 @@
         "id": "88999f66ab8c9179",
         "type": "inject",
         "z": "eadfb4a3a54a2057",
+        "g": "dbdadc8ef34435c3",
         "name": "Toogle",
         "props": [
             {
-                "p": "payload"
+                "p": "topic",
+                "v": "topic",
+                "vt": "msg"
             },
             {
-                "p": "topic",
-                "vt": "str"
+                "p": "payload"
             }
         ],
         "repeat": "",
@@ -1871,9 +1972,9 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "Toogle",
+        "payload": "toggle",
         "payloadType": "str",
-        "x": 110,
+        "x": 130,
         "y": 80,
         "wires": [
             [
@@ -1885,8 +1986,9 @@
         "id": "e13702a13f98e003",
         "type": "mqtt out",
         "z": "eadfb4a3a54a2057",
-        "name": "Cmd",
-        "topic": "shelly/cmd",
+        "g": "dbdadc8ef34435c3",
+        "name": "Commande",
+        "topic": "shelly1/command/switch:0",
         "qos": "",
         "retain": "false",
         "respTopic": "",
@@ -1895,7 +1997,7 @@
         "correl": "",
         "expiry": "",
         "broker": "2c1deb7f20a3ab6d",
-        "x": 370,
+        "x": 410,
         "y": 140,
         "wires": []
     },
@@ -1903,6 +2005,7 @@
         "id": "74251a0c38694bee",
         "type": "ui_led",
         "z": "eadfb4a3a54a2057",
+        "g": "22184d3203c59a42",
         "order": 3,
         "group": "9a5eecc837c8c607",
         "width": 0,
@@ -1931,24 +2034,25 @@
         "shape": "circle",
         "showGlow": true,
         "name": "Pompe",
-        "x": 540,
-        "y": 420,
+        "x": 580,
+        "y": 500,
         "wires": []
     },
     {
         "id": "3b5bf1baf660998e",
         "type": "function",
         "z": "eadfb4a3a54a2057",
+        "g": "22184d3203c59a42",
         "name": "DeltaTimestamp",
-        "func": "let time = msg.payload\nlet ShellyTime = global.get(\"ShellyTime\") || null\n\nif (ShellyTime != null){\n    let delta = (time - ShellyTime) / 1000\n    let rounddelta = Math.round(delta)\n\n    if (rounddelta > 10) {\n        msg.payload = 2\n        return msg;\n    }\n} else {\n    msg.payload = 2\n    return msg;\n}",
+        "func": "let time = msg.payload\nlet ShellyTime = global.get(\"ShellyTime\") || null\n\nif (ShellyTime != null){\n    let delta = (time - ShellyTime) / 1000\n    let rounddelta = Math.round(delta)\n\n    if (rounddelta > 120) {\n        msg.payload = 2\n        return msg;\n    }\n} else {\n    msg.payload = 2\n    return msg;\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 420,
+        "x": 380,
+        "y": 500,
         "wires": [
             [
                 "74251a0c38694bee",
@@ -1960,6 +2064,7 @@
         "id": "14e4e4ead6a3918f",
         "type": "inject",
         "z": "eadfb4a3a54a2057",
+        "g": "22184d3203c59a42",
         "name": "Check timestamp",
         "props": [
             {
@@ -1970,15 +2075,15 @@
                 "vt": "str"
             }
         ],
-        "repeat": "10",
+        "repeat": "120",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 130,
-        "y": 420,
+        "x": 170,
+        "y": 500,
         "wires": [
             [
                 "3b5bf1baf660998e"
@@ -1989,8 +2094,9 @@
         "id": "ace1b4666da5f9e7",
         "type": "mqtt in",
         "z": "eadfb4a3a54a2057",
+        "g": "4ad63082165590ae",
         "name": "Shelly/info",
-        "topic": "Shelly/info",
+        "topic": "shelly1/status/switch:0",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "2c1deb7f20a3ab6d",
@@ -1998,13 +2104,12 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 80,
+        "x": 120,
         "y": 280,
         "wires": [
             [
                 "2219b408a69bb02a",
-                "74251a0c38694bee",
-                "836fd6bcf73b9280"
+                "a1bd1e33915e6417"
             ]
         ]
     },
@@ -2012,6 +2117,7 @@
         "id": "2219b408a69bb02a",
         "type": "function",
         "z": "eadfb4a3a54a2057",
+        "g": "4ad63082165590ae",
         "name": "Time last Shelly msg",
         "func": "const today = new Date()\nglobal.set(\"ShellyTime\", today) // Save timestamp\n\nlet mm = today.getMonth() + 1; // Months start at 0!\nlet dd = today.getDate();\nlet annee = today.getFullYear();\nlet heure = today.getHours()\nlet minute = today.getMinutes()\nlet seconde = today.getSeconds()\n\nif (dd < 10) dd = '0' + dd;\nif (mm < 10) mm = '0' + mm;\nif (heure < 10) heure = '0' + heure;\nif (minute < 10) minute = '0' + minute;\nif (seconde < 10) seconde = '0' + seconde;\n\nconst formattedToday = dd + '/' + mm + '/' + annee + ' ' + heure + 'h' + minute +':' + seconde;\nmsg.payload = formattedToday\nreturn msg",
         "outputs": 1,
@@ -2020,8 +2126,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 280,
-        "y": 280,
+        "x": 340,
+        "y": 240,
         "wires": [
             [
                 "e85ec6314cb47044"
@@ -2032,8 +2138,9 @@
         "id": "e85ec6314cb47044",
         "type": "ui_text",
         "z": "eadfb4a3a54a2057",
-        "group": "80145f6438d993ee",
-        "order": 1,
+        "g": "4ad63082165590ae",
+        "group": "42ecb749994c6d3a",
+        "order": 2,
         "width": 0,
         "height": 0,
         "name": "Last Shelly msg",
@@ -2045,14 +2152,15 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 520,
-        "y": 280,
+        "x": 560,
+        "y": 240,
         "wires": []
     },
     {
         "id": "d8bd0e8845115a1c",
         "type": "ui_button",
         "z": "eadfb4a3a54a2057",
+        "g": "dbdadc8ef34435c3",
         "name": "",
         "group": "db6b546b02db6c4e",
         "order": 1,
@@ -2065,11 +2173,11 @@
         "bgcolor": "",
         "className": "",
         "icon": "",
-        "payload": "toogle",
+        "payload": "toggle",
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 130,
+        "x": 150,
         "y": 140,
         "wires": [
             [
@@ -2081,6 +2189,7 @@
         "id": "836fd6bcf73b9280",
         "type": "ui_led",
         "z": "eadfb4a3a54a2057",
+        "g": "22184d3203c59a42",
         "order": 3,
         "group": "db6b546b02db6c4e",
         "width": 0,
@@ -2109,8 +2218,176 @@
         "shape": "circle",
         "showGlow": true,
         "name": "Pompe",
-        "x": 540,
-        "y": 380,
+        "x": 580,
+        "y": 460,
         "wires": []
+    },
+    {
+        "id": "a1bd1e33915e6417",
+        "type": "function",
+        "z": "eadfb4a3a54a2057",
+        "g": "4ad63082165590ae",
+        "name": "Get info from message",
+        "func": "let convertbooltoint = msg.payload.output ? 1 : 0\nlet output = { payload: convertbooltoint }\nlet power = { payload: msg.payload.apower }\nlet current = { payload: msg.payload.current }\n\n// Save data\nlet Name = \"GPuissance1\"\nlet AllData = global.get(Name) || []\nAllData.push({ time: new Date().getTime(), data: msg.payload.apower })\nglobal.set(Name, AllData)\n\n// send output data\nreturn [power, current, output];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 320,
+        "wires": [
+            [
+                "80d999caa83de4e3"
+            ],
+            [
+                "d1dbc7c2b0acb08d"
+            ],
+            [
+                "836fd6bcf73b9280",
+                "74251a0c38694bee"
+            ]
+        ]
+    },
+    {
+        "id": "80d999caa83de4e3",
+        "type": "ui_text",
+        "z": "eadfb4a3a54a2057",
+        "g": "4ad63082165590ae",
+        "group": "80145f6438d993ee",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "Puissance",
+        "label": "Puissance",
+        "format": "{{msg.payload}} W",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 570,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "d1dbc7c2b0acb08d",
+        "type": "ui_text",
+        "z": "eadfb4a3a54a2057",
+        "g": "4ad63082165590ae",
+        "group": "80145f6438d993ee",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "Courant",
+        "label": "Courant",
+        "format": "{{msg.payload}} A",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 560,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c83c797abd810d76",
+        "type": "inject",
+        "z": "eadfb4a3a54a2057",
+        "g": "0d45f4cb6181c85e",
+        "name": "1/H",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "GPuissance1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 640,
+        "wires": [
+            [
+                "be841306d23791f5"
+            ]
+        ]
+    },
+    {
+        "id": "be841306d23791f5",
+        "type": "function",
+        "z": "eadfb4a3a54a2057",
+        "g": "0d45f4cb6181c85e",
+        "name": "Moyenne",
+        "func": "let Name = msg.topic\n\nlet AllData = global.get(Name) || []\n\nif (AllData.length > 0) {\n    let Length = AllData.length\n    let Somme = 0\n    AllData.forEach(function(element) {\n        Somme += Number.parseFloat(element.data)\n    });\n    let Value = Somme / Length\n    msg.payload = Value\n    AllData = []\n    global.set(Name, AllData)\n    return msg \n}\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 640,
+        "wires": [
+            [
+                "8698fcee1a192748"
+            ]
+        ]
+    },
+    {
+        "id": "8698fcee1a192748",
+        "type": "ui_chart",
+        "z": "eadfb4a3a54a2057",
+        "g": "0d45f4cb6181c85e",
+        "name": "Puissance",
+        "group": "c61bc30f9b7b9de8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Puissance",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "25",
+        "removeOlder": "4",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 510,
+        "y": 640,
+        "wires": [
+            []
+        ]
     }
 ]
