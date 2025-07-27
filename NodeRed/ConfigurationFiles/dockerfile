@@ -10,3 +10,4 @@ RUN npm install node-red-dashboard
 RUN npm install node-red-contrib-socketcan
 RUN npm install node-red-contrib-ui-led
 RUN npm install js-pigpio
+RUN npm install node-red-contrib-telegrambot
