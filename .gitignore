@@ -3,6 +3,7 @@
 **.sessions.json
 **package.json
 node_modules
+_cacache
 
 # Logs
 logs
