@@ -54,6 +54,14 @@
         "env": []
     },
     {
+        "id": "6ed8acb3643e3aa4",
+        "type": "tab",
+        "label": "Telegram",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "64750ab7c62dcc42",
         "type": "group",
         "z": "829f0f27baac9fee",
@@ -123,12 +131,14 @@
         "nodes": [
             "4f2fad3217906941",
             "2e93e5257cdc6876",
-            "8dfaeb1745400549"
+            "8dfaeb1745400549",
+            "698f8a20a6db1775",
+            "4476688065315274"
         ],
         "x": 154,
         "y": 379,
-        "w": 572,
-        "h": 82
+        "w": 672,
+        "h": 142
     },
     {
         "id": "528915db7e5592cb",
@@ -141,12 +151,14 @@
         "nodes": [
             "9db296591727fc03",
             "76be930a2c6d27f0",
-            "3516b349d65670eb"
+            "3516b349d65670eb",
+            "fb341b06fdd11698",
+            "7988ae49ca6c8690"
         ],
         "x": 94,
         "y": 339,
-        "w": 532,
-        "h": 82
+        "w": 692,
+        "h": 142
     },
     {
         "id": "22184d3203c59a42",
@@ -160,12 +172,14 @@
             "74251a0c38694bee",
             "3b5bf1baf660998e",
             "14e4e4ead6a3918f",
-            "836fd6bcf73b9280"
+            "836fd6bcf73b9280",
+            "8b37aba30ab79587",
+            "f740f7edcb3e3f40"
         ],
         "x": 34,
-        "y": 419,
-        "w": 632,
-        "h": 122
+        "y": 459,
+        "w": 752,
+        "h": 162
     },
     {
         "id": "dbdadc8ef34435c3",
@@ -199,12 +213,14 @@
             "e85ec6314cb47044",
             "a1bd1e33915e6417",
             "80d999caa83de4e3",
-            "d1dbc7c2b0acb08d"
+            "d1dbc7c2b0acb08d",
+            "bf829ddcad972810",
+            "0f0e13fd3fb59b1f"
         ],
         "x": 34,
         "y": 199,
-        "w": 632,
-        "h": 182
+        "w": 732,
+        "h": 222
     },
     {
         "id": "0d45f4cb6181c85e",
@@ -220,7 +236,7 @@
             "8698fcee1a192748"
         ],
         "x": 34,
-        "y": 599,
+        "y": 659,
         "w": 572,
         "h": 82
     },
@@ -492,6 +508,33 @@
         "className": ""
     },
     {
+        "id": "af579e9068e52cfc",
+        "type": "telegram bot",
+        "botname": "VanKoEventBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
         "id": "89b0847a90cea17c",
         "type": "function",
         "z": "37bc5d1b0738c09e",
@@ -717,7 +760,8 @@
         "y": 520,
         "wires": [
             [
-                "e729539ec74618a0"
+                "e729539ec74618a0",
+                "0bcb478e5bf3c534"
             ]
         ]
     },
@@ -750,6 +794,39 @@
         "name": "CAN Statut",
         "x": 590,
         "y": 520,
+        "wires": []
+    },
+    {
+        "id": "0bcb478e5bf3c534",
+        "type": "function",
+        "z": "37bc5d1b0738c09e",
+        "name": "Send Telegram",
+        "func": "// send telegram si shelly n'est plus connecté\n\n// Check previous info\nlet lastinfo = global.get(\"InfoCanStatus\") || null\n// si l'info précédente est différentes de l'actuelle info\nif (msg.payload != lastinfo) {\n    global.set(\"InfoCanStatus\", msg.payload)\n    if (msg.payload == false) {\n        msg.payload = \"Can bus deconnecté\"\n\n    } else {\n        msg.payload = \"Can bus connecté\"\n    }\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 580,
+        "wires": [
+            [
+                "398a5e99b9fd7878"
+            ]
+        ]
+    },
+    {
+        "id": "398a5e99b9fd7878",
+        "type": "link out",
+        "z": "37bc5d1b0738c09e",
+        "name": "Sens Telegram",
+        "mode": "link",
+        "links": [
+            "6b5262ce449428f0"
+        ],
+        "x": 745,
+        "y": 580,
         "wires": []
     },
     {
@@ -810,7 +887,8 @@
                 "8e4347e83ecfe6fc",
                 "54d6e2c871c5a7cb",
                 "5f0821d809ae7948",
-                "38d36b45d7ce49f7"
+                "38d36b45d7ce49f7",
+                "76a849b20d468a3d"
             ]
         ]
     },
@@ -898,6 +976,39 @@
         "name": "Retour Eau",
         "x": 390,
         "y": 100,
+        "wires": []
+    },
+    {
+        "id": "76a849b20d468a3d",
+        "type": "function",
+        "z": "68559bc850822b28",
+        "name": "Send Telegram",
+        "func": "// send telegram si l'eau n'est pas détectée\n\n// Check previous info\nlet lastinfo = global.get(\"InfoCapteuEauStatus\") || null\n// si l'info précédente est différentes de l'actuelle info\nif (msg.payload != lastinfo) {\n    global.set(\"InfoCapteuEauStatus\", msg.payload)\n    if (msg.payload == 0) {\n        msg.payload = \"Pas d'eau détectée a l evacuation\"\n\n    } else {\n        msg.payload = \"Eau détectée a l evacuation\"\n    }\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 280,
+        "wires": [
+            [
+                "621f10ea137bf14f"
+            ]
+        ]
+    },
+    {
+        "id": "621f10ea137bf14f",
+        "type": "link out",
+        "z": "68559bc850822b28",
+        "name": "Sens Telegram",
+        "mode": "link",
+        "links": [
+            "6b5262ce449428f0"
+        ],
+        "x": 525,
+        "y": 280,
         "wires": []
     },
     {
@@ -1422,9 +1533,45 @@
         "y": 420,
         "wires": [
             [
-                "8dfaeb1745400549"
+                "8dfaeb1745400549",
+                "698f8a20a6db1775"
             ]
         ]
+    },
+    {
+        "id": "698f8a20a6db1775",
+        "type": "function",
+        "z": "8be2de6d3dfabc6a",
+        "g": "6cea342acd6fbe11",
+        "name": "Send Telegram",
+        "func": "// send telegram la moyenne est plus petite que 10%\n\n// si le niveau d'eau est plus petit que 10%\nif (msg.payload < 10){\n    // Check previous info\n    let lastinfo = global.get(\"InfoNivEauCritique\") || null\n    // si l'info précédente est différentes de l'actuelle info\n    if (lastinfo != true) {\n        global.set(\"InfoNivEauCritique\", true)\n        msg.payload = \"Le niveau d'eau est critique = \" + msg.payload + \"%\"\n        return msg;\n    }    \n} else {\n    global.set(\"InfoNivEauCritique\", false)\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 480,
+        "wires": [
+            [
+                "4476688065315274"
+            ]
+        ]
+    },
+    {
+        "id": "4476688065315274",
+        "type": "link out",
+        "z": "8be2de6d3dfabc6a",
+        "g": "6cea342acd6fbe11",
+        "name": "Sens Telegram",
+        "mode": "link",
+        "links": [
+            "6b5262ce449428f0"
+        ],
+        "x": 785,
+        "y": 480,
+        "wires": []
     },
     {
         "id": "1a1fd5e5499967da",
@@ -1685,9 +1832,45 @@
         "y": 380,
         "wires": [
             [
-                "3516b349d65670eb"
+                "3516b349d65670eb",
+                "fb341b06fdd11698"
             ]
         ]
+    },
+    {
+        "id": "fb341b06fdd11698",
+        "type": "function",
+        "z": "cd0de7ec7d7b0cc3",
+        "g": "528915db7e5592cb",
+        "name": "Send Telegram",
+        "func": "// send telegram la moyenne est plus petite que 0.5\n\n// si le niveau d'eau est plus petit que 10%\nif (msg.payload < 0.5){\n    // Check previous info\n    let lastinfo = global.get(\"InfoNivTDSCritique\") || null\n    // si l'info précédente est différentes de l'actuelle info\n    if (lastinfo != true) {\n        global.set(\"InfoNivTDSCritique\", true)\n        msg.payload = \"Le niveau TDS est critique = \" + msg.payload\n        return msg;\n    }    \n} else {\n    global.set(\"InfoNivTDSCritique\", false)\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 440,
+        "wires": [
+            [
+                "7988ae49ca6c8690"
+            ]
+        ]
+    },
+    {
+        "id": "7988ae49ca6c8690",
+        "type": "link out",
+        "z": "cd0de7ec7d7b0cc3",
+        "g": "528915db7e5592cb",
+        "name": "Sens Telegram",
+        "mode": "link",
+        "links": [
+            "6b5262ce449428f0"
+        ],
+        "x": 745,
+        "y": 440,
+        "wires": []
     },
     {
         "id": "9d06d2dccec353ea",
@@ -2035,7 +2218,7 @@
         "showGlow": true,
         "name": "Pompe",
         "x": 580,
-        "y": 500,
+        "y": 540,
         "wires": []
     },
     {
@@ -2052,11 +2235,12 @@
         "finalize": "",
         "libs": [],
         "x": 380,
-        "y": 500,
+        "y": 540,
         "wires": [
             [
                 "74251a0c38694bee",
-                "836fd6bcf73b9280"
+                "836fd6bcf73b9280",
+                "8b37aba30ab79587"
             ]
         ]
     },
@@ -2083,7 +2267,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 500,
+        "y": 540,
         "wires": [
             [
                 "3b5bf1baf660998e"
@@ -2219,7 +2403,7 @@
         "showGlow": true,
         "name": "Pompe",
         "x": 580,
-        "y": 460,
+        "y": 500,
         "wires": []
     },
     {
@@ -2246,7 +2430,8 @@
             ],
             [
                 "836fd6bcf73b9280",
-                "74251a0c38694bee"
+                "74251a0c38694bee",
+                "bf829ddcad972810"
             ]
         ]
     },
@@ -2317,7 +2502,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 130,
-        "y": 640,
+        "y": 700,
         "wires": [
             [
                 "be841306d23791f5"
@@ -2338,7 +2523,7 @@
         "finalize": "",
         "libs": [],
         "x": 320,
-        "y": 640,
+        "y": 700,
         "wires": [
             [
                 "8698fcee1a192748"
@@ -2385,9 +2570,192 @@
         "useDifferentColor": false,
         "className": "",
         "x": 510,
-        "y": 640,
+        "y": 700,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "8b37aba30ab79587",
+        "type": "function",
+        "z": "eadfb4a3a54a2057",
+        "g": "22184d3203c59a42",
+        "name": "Send Telegram",
+        "func": "// send telegram si shelly n'est plus connecté\n\n// Check previous info\nlet lastinfo = global.get(\"InfoShellyStatus\") || null\n\n\nif (msg.payload == 2){\n    if (lastinfo != 2){\n        global.set(\"InfoShellyStatus\", 2)\n        msg.payload = \"Shelly deconnecté\"\n        return msg; \n    }   \n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 580,
+        "wires": [
+            [
+                "f740f7edcb3e3f40"
+            ]
+        ]
+    },
+    {
+        "id": "f740f7edcb3e3f40",
+        "type": "link out",
+        "z": "eadfb4a3a54a2057",
+        "g": "22184d3203c59a42",
+        "name": "Sens Telegram",
+        "mode": "link",
+        "links": [
+            "6b5262ce449428f0"
+        ],
+        "x": 745,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "bf829ddcad972810",
+        "type": "function",
+        "z": "eadfb4a3a54a2057",
+        "g": "4ad63082165590ae",
+        "name": "Send Telegram",
+        "func": "// send telegram avec le statu du Shelly\n\n// Check previous info\nlet lastinfo = global.get(\"InfoShellyStatus\") || null\nif (msg.payload != lastinfo){\n    global.set(\"InfoShellyStatus\", msg.payload)\n    if (msg.payload == 0) {\n        msg.payload = \"Pompe éteinte\"\n\n    } else {\n        msg.payload = \"Pompe allumée\"\n    }\n    return msg;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 380,
+        "wires": [
+            [
+                "0f0e13fd3fb59b1f"
+            ]
+        ]
+    },
+    {
+        "id": "0f0e13fd3fb59b1f",
+        "type": "link out",
+        "z": "eadfb4a3a54a2057",
+        "g": "4ad63082165590ae",
+        "name": "Sens Telegram",
+        "mode": "link",
+        "links": [
+            "6b5262ce449428f0"
+        ],
+        "x": 725,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ab3cfd4c1c64c283",
+        "type": "telegram receiver",
+        "z": "6ed8acb3643e3aa4",
+        "name": "VanKoEventBot",
+        "bot": "af579e9068e52cfc",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "a297e8810a7f5c07"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a297e8810a7f5c07",
+        "type": "debug",
+        "z": "6ed8acb3643e3aa4",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c672692c04d7627d",
+        "type": "telegram sender",
+        "z": "6ed8acb3643e3aa4",
+        "name": "VanKoEventBot",
+        "bot": "af579e9068e52cfc",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "beaf85d7508f317d",
+        "type": "inject",
+        "z": "6ed8acb3643e3aa4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Attention niveau d'eau bas",
+        "payloadType": "str",
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "e24ae1a141d0aef0"
+            ]
+        ]
+    },
+    {
+        "id": "e24ae1a141d0aef0",
+        "type": "function",
+        "z": "6ed8acb3643e3aa4",
+        "name": "Send Msg",
+        "func": "let message = msg.payload\nmsg.payload = {};\nmsg.payload.chatId = 8321020800;\nmsg.payload.type = 'message';\nmsg.payload.content = 'Hydro: ' + message;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "c672692c04d7627d"
+            ]
+        ]
+    },
+    {
+        "id": "6b5262ce449428f0",
+        "type": "link in",
+        "z": "6ed8acb3643e3aa4",
+        "name": "Telegram",
+        "links": [
+            "f740f7edcb3e3f40",
+            "0f0e13fd3fb59b1f",
+            "398a5e99b9fd7878",
+            "621f10ea137bf14f",
+            "4476688065315274",
+            "7988ae49ca6c8690"
+        ],
+        "x": 185,
+        "y": 240,
+        "wires": [
+            [
+                "e24ae1a141d0aef0"
+            ]
         ]
     }
 ]
