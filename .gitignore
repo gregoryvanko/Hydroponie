@@ -4,7 +4,7 @@
 **package*.json
 node_modules
 _cacache
-flows_cred.json
+flows_cred.json*
 .npm
 
 # Logs
