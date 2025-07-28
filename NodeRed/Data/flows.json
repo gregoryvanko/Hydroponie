@@ -508,7 +508,7 @@
         "className": ""
     },
     {
-        "id": "af579e9068e52cfc",
+        "id": "379d6a21f924a45e",
         "type": "telegram bot",
         "botname": "VanKoEventBot",
         "usernames": "",
@@ -2650,10 +2650,10 @@
         "type": "telegram receiver",
         "z": "6ed8acb3643e3aa4",
         "name": "VanKoEventBot",
-        "bot": "af579e9068e52cfc",
+        "bot": "379d6a21f924a45e",
         "saveDataDir": "",
         "filterCommands": false,
-        "x": 160,
+        "x": 200,
         "y": 100,
         "wires": [
             [
@@ -2674,7 +2674,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 360,
+        "x": 400,
         "y": 100,
         "wires": []
     },
@@ -2683,12 +2683,13 @@
         "type": "telegram sender",
         "z": "6ed8acb3643e3aa4",
         "name": "VanKoEventBot",
-        "bot": "af579e9068e52cfc",
-        "haserroroutput": false,
-        "outputs": 1,
+        "bot": "379d6a21f924a45e",
+        "haserroroutput": true,
+        "outputs": 2,
         "x": 560,
         "y": 240,
         "wires": [
+            [],
             []
         ]
     },
@@ -2722,7 +2723,7 @@
         "type": "function",
         "z": "6ed8acb3643e3aa4",
         "name": "Send Msg",
-        "func": "let message = msg.payload\nmsg.payload = {};\nmsg.payload.chatId = 8321020800;\nmsg.payload.type = 'message';\nmsg.payload.content = '<b><u>Hydro</u></b> \\n' + message;\nmsg.payload.options = { parse_mode: \"HTML\" };\nreturn msg;",
+        "func": "let message = msg.payload\nmsg.payload = {};\n//msg.payload.chatId = 8321020800;\nmsg.payload.chatId = env.get(\"TELEGRAM_CHATID\")\nmsg.payload.type = 'message';\nmsg.payload.content = '<b><u>Hydro</u></b> \\n' + message;\nmsg.payload.options = { parse_mode: \"HTML\" };\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,

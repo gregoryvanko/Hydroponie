@@ -3,7 +3,7 @@
         "user": "gregory",
         "password": "gregory"
     },
-    "af579e9068e52cfc": {
-        "token": "8006839141:AAF3lxE9vM74vYhQIB7CwVq6PivYXMs3YCw"
+    "379d6a21f924a45e": {
+        "token": "${TELEGRAM_TOKEN}"
     }
 }
