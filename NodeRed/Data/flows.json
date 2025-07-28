@@ -2696,7 +2696,7 @@
         "id": "beaf85d7508f317d",
         "type": "inject",
         "z": "6ed8acb3643e3aa4",
-        "name": "",
+        "name": "Test message",
         "props": [
             {
                 "p": "payload"
@@ -2707,9 +2707,9 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "Attention niveau d'eau bas",
+        "payload": "Message de test",
         "payloadType": "str",
-        "x": 170,
+        "x": 190,
         "y": 180,
         "wires": [
             [
@@ -2722,7 +2722,7 @@
         "type": "function",
         "z": "6ed8acb3643e3aa4",
         "name": "Send Msg",
-        "func": "let message = msg.payload\nmsg.payload = {};\nmsg.payload.chatId = 8321020800;\nmsg.payload.type = 'message';\nmsg.payload.content = 'Hydro: ' + message;\nreturn msg;",
+        "func": "let message = msg.payload\nmsg.payload = {};\nmsg.payload.chatId = 8321020800;\nmsg.payload.type = 'message';\nmsg.payload.content = '<b><u>Hydro</u></b> \\n' + message;\nmsg.payload.options = { parse_mode: \"HTML\" };\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
