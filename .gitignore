@@ -5,6 +5,7 @@
 node_modules
 _cacache
 **flows_cred.json*
+.npm
 
 # Logs
 logs
